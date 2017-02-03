@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AEF8B719-8C38-4F19-A769-28E4EECB2627}</ProjectGuid>
+    <RootNamespace>SolaComm</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;TCPDEBUGGING=0;TCPPROTONODE=0;_CRTDBG_MAP_ALLOC;_CRTDBG_MAP_ALLOC_NEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AssemblerOutput>
+      </AssemblerOutput>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL;D:\Visual Studio Projects\Sola_Testing_DLL\Sola_Testing_DLL;D:\Visual Studio Projects\Report_Error_DLL\Report_Error_DLL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>strsafe.lib comctl32.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;Report_Error_DLL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Debug;D:\Visual Studio Projects\Sola_Testing_DLL\Debug;D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;TCPDEBUGGING=0;TCPPROTONODE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL;D:\Visual Studio Projects\Sola_Testing_DLL\Sola_Testing_DLL;D:\Visual Studio Projects\Report_Error_DLL\Report_Error_DLL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;strsafe.lib;ws2_32.lib;Report_Error_DLL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Release;D:\Visual Studio Projects\Sola_Testing_DLL\Release;D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AlertLogDlg.cpp" />
+    <ClCompile Include="BurnerControlConfigDlg.cpp" />
+    <ClCompile Include="CHConfigDlg.cpp" />
+    <ClCompile Include="crc16.cpp" />
+    <ClCompile Include="DHWConfigDlg.cpp" />
+    <ClCompile Include="DigitalIODlg.cpp" />
+    <ClCompile Include="InitSolaDatabase.cpp" />
+    <ClCompile Include="LimitsConfigDlg.cpp" />
+    <ClCompile Include="LLConfigDlg.cpp" />
+    <ClCompile Include="LLStatusDlg.cpp" />
+    <ClCompile Include="LoadParms.cpp" />
+    <ClCompile Include="LockoutLogDlg.cpp" />
+    <ClCompile Include="LockoutRecordDisplay.cpp" />
+    <ClCompile Include="MBServerIPDlg.cpp" />
+    <ClCompile Include="ModConfigDlg.cpp" />
+    <ClCompile Include="NoticeDialog.cpp" />
+    <ClCompile Include="ODResetCfgDlg.cpp" />
+    <ClCompile Include="ODResetLineDlg.cpp" />
+    <ClCompile Include="PollingDlg.cpp" />
+    <ClCompile Include="PumpConfigDlg.cpp" />
+    <ClCompile Include="SaveRestore.cpp" />
+    <ClCompile Include="ShowWarning.cpp" />
+    <ClCompile Include="SolaAlert.cpp" />
+    <ClCompile Include="SolaChangeCode.cpp" />
+    <ClCompile Include="SolaComm.cpp" />
+    <ClCompile Include="SolaID.cpp" />
+    <ClCompile Include="SolaLockout.cpp" />
+    <ClCompile Include="SolaLockoutDesc.cpp" />
+    <ClCompile Include="SolaMBMap.cpp" />
+    <ClCompile Include="SolaMBMaps.cpp" />
+    <ClCompile Include="SolaMultiValue.cpp" />
+    <ClCompile Include="SolaPage.cpp" />
+    <ClCompile Include="SolaPollThread.cpp" />
+    <ClCompile Include="SolaRTUComm.cpp" />
+    <ClCompile Include="SolaSummaryDlg.cpp" />
+    <ClCompile Include="SolaTCPComm.cpp" />
+    <ClCompile Include="SolaWriteReadFn.cpp" />
+    <ClCompile Include="Sola_RTU_Serial_Gateway.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SystemIDDlg.cpp" />
+    <ClCompile Include="TimerThread.cpp" />
+    <ClCompile Include="UIDialogs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LockoutRecordDisplay.h" />
+    <ClInclude Include="NoticeDialog.h" />
+    <ClInclude Include="PollingDlg.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SolaAlert.h" />
+    <ClInclude Include="SolaChangeCode.h" />
+    <ClInclude Include="SolaComm.h" />
+    <ClInclude Include="SolaID.h" />
+    <ClInclude Include="SolaLockout.h" />
+    <ClInclude Include="SolaLockoutDesc.h" />
+    <ClInclude Include="SolaMBMap.h" />
+    <ClInclude Include="SolaMBMaps.h" />
+    <ClInclude Include="SolaMultiValue.h" />
+    <ClInclude Include="SolaPage.h" />
+    <ClInclude Include="SolaTCPComm.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AlertLogDlg.rc" />
+    <ResourceCompile Include="BurnerControlConfig.rc" />
+    <ResourceCompile Include="CHConfigDlg.rc" />
+    <ResourceCompile Include="DHWConfigDlg.rc" />
+    <ResourceCompile Include="DigitalIODlg.rc" />
+    <ResourceCompile Include="LimitsConfigDlg.rc" />
+    <ResourceCompile Include="LLConfigDlg.rc" />
+    <ResourceCompile Include="LLStatusDlg.rc" />
+    <ResourceCompile Include="LoadParms.rc" />
+    <ResourceCompile Include="LockoutLogDlg.rc" />
+    <ResourceCompile Include="LockoutRecordDisplayDlg.rc" />
+    <ResourceCompile Include="MBServerIPDlg.rc" />
+    <ResourceCompile Include="ModConfigDlg.rc" />
+    <ResourceCompile Include="ODResetCfgDlg.rc" />
+    <ResourceCompile Include="ODResetLineDlg.rc" />
+    <ResourceCompile Include="PollingDlg.rc" />
+    <ResourceCompile Include="PumpConfigDlg.rc" />
+    <ResourceCompile Include="SaveRestore.rc" />
+    <ResourceCompile Include="SolaComm.rc" />
+    <ResourceCompile Include="stringtable.rc" />
+    <ResourceCompile Include="SystemIDDlg.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NTI_Logo.ico" />
+    <None Include="small.ico" />
+    <None Include="SolaComm.ico" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

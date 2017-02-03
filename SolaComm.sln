@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SolaComm", "SolaComm.vcxproj", "{AEF8B719-8C38-4F19-A769-28E4EECB2627}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NTIWarning", "NTIWarning\NTIWarning.vcxproj", "{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEF8B719-8C38-4F19-A769-28E4EECB2627}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AEF8B719-8C38-4F19-A769-28E4EECB2627}.Debug|Win32.Build.0 = Debug|Win32
+		{AEF8B719-8C38-4F19-A769-28E4EECB2627}.Release|Win32.ActiveCfg = Release|Win32
+		{AEF8B719-8C38-4F19-A769-28E4EECB2627}.Release|Win32.Build.0 = Release|Win32
+		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}.Debug|Win32.Build.0 = Debug|Win32
+		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}.Release|Win32.ActiveCfg = Release|Win32
+		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

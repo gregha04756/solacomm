@@ -1,0 +1,219 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENC)
+LANGUAGE 9, 4
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+
+IDI_SOLACOMM       ICON         "NTI_Logo.ico"
+IDI_SMALL          ICON         "NTI_Logo.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+//IDD_SOLASUMMARYDLG DIALOG   22, 17, 350, 200
+IDD_SOLASUMMARYDLG DIALOG   22, 17, 350, 205
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "SolaStatus"
+FONT 8, "Verdana"
+BEGIN
+//    ICON            IDI_SOLASTATUS,IDC_MYICON,14,9,16,16
+	LTEXT			"",IDC_LBLCURLOCKOUTCODE,	10,		2,		10,		8
+	LTEXT			"",IDC_LBLCURHOLDCODE,		10,		2,		10,		8
+    LTEXT           "",IDC_LBLDEMAND,			5,		10,		60,		8
+    LTEXT           "",IDC_LBLBURNERSTATE,		5,		20,		60,		8
+    LTEXT           "",IDC_LBLBURNERSEQTIME,	5,		28,		45,		8
+    LTEXT           "",IDC_LBLBURNERDLYTIME,	100,	28,		45,		8
+    LTEXT           "",IDC_LBLDHWPRICNT,		5,		40,		60,		8
+    LTEXT           "",IDC_LBLCHPUMPSTATUS,		5,		75,		50,		8
+    LTEXT           "",IDC_LBLDHWPUMPSTATUS,	5,		85,		50,		8
+    LTEXT           "",IDC_LBLSYSPUMPSTATUS,	5,		95,		50,		8
+    LTEXT           "",IDC_LBLBLRPUMPSTATUS,	5,		105,	50,		8
+    LTEXT           "",IDC_LBLINLETTEMP,		5,		50,		30,		8
+    LTEXT           "",IDC_LBLOUTLETTEMP,		35,		50,		30,		8
+    LTEXT           "",IDC_LBLSYSTEMTEMP,		70,		50,		30,		8
+    LTEXT           "",IDC_LBL420INPUT,			120,	50,		50,		8
+    LTEXT           "",IDC_LBLSTACKTEMP,		170,	50,		50,		8
+    LTEXT           "",IDC_LBLDHWTEMP,			220,	50,		50,		8
+    LTEXT           "",IDC_LBLODTEMP,			270,	50,		50,		8
+    LTEXT           "",IDC_LBLFIRINGRATE,		200,	10,		60,		8
+    LTEXT           "",IDC_LBLFANSPEED,			200,	20,		60,		8
+/*    LTEXT           "",IDC_LBLFLAMESIG,			5,		115,	60,		8*/
+    LTEXT           "",IDC_LBLCHSETPT,			110,		125,	50,		8
+    LTEXT           "",IDC_LBLDHWSETPT,			110,		135,	50,		8
+    LTEXT           "",IDC_LBLTSLLSETPOINT,		110,		145,	50,		8
+    LTEXT           "",IDC_LBLACTVRATELIM,		150,	75,		60,		8
+    LTEXT           "",IDC_LBLLTDRATE,			150,	85,		60,		8
+    LTEXT           "",IDC_LBLACTVRATEOVRD,		150,	95,		60,		8	
+    LTEXT           "",IDC_LBLOVRDRATE,			150,	105,	60,		8
+    LTEXT           "",IDC_LBLDEMANDRATE,		150,	115,	60,		8
+    LTEXT           "",IDC_LBLCHONHYST,			5,		125,	50,		8
+    LTEXT           "",IDC_LBLACTVDHWONHYST,	5,		135,	50,		8
+    LTEXT           "",IDC_LBLLLONHYSTERESIS,	5,		145,	50,		8
+    LTEXT           "",IDC_LBLCHOFFHYST,		215,	125,	50,		8
+    LTEXT           "",IDC_LBLACTVDHWOFFHYST,	215,	135,	50,		8
+    LTEXT           "",IDC_LBLLLOFFHYSTERESIS,	215,	145,	50,		8
+    LTEXT           "",IDC_LBLACTVSETPOINT,		200,	30,		50,		8
+    LTEXT           "",IDC_TXTACTVSETPOINT,		240,	30,		60,		8
+	CTEXT			"",IDC_TXTCURLOCKOUTCODE,	50,		2,		200,	8, SS_CENTER
+	CTEXT			"",IDC_TXTCURHOLDCODE,		50,		2,		200,	8, SS_CENTER
+    LTEXT           "",IDC_TXTDEMAND,			60,		10,		80,		8
+    LTEXT           "",IDC_TXTBURNERSTATE,		60,		20,		100,	8
+    LTEXT           "",IDC_TXTBURNERSEQTIME,	45,		28,		40,		8
+    LTEXT           "",IDC_TXTBURNERDLYTIME,	130,	28,		40,		8
+    LTEXT           "",IDC_TXTDHWPRICNT,		70,		40,		100,	8
+    LTEXT           "",IDC_TXTFIRINGRATE,		240,	10,		50,		8
+    LTEXT           "",IDC_TXTFANSPEED,			240,	20,		50,		8
+    LTEXT           "",IDC_TXTINLETTEMP,		5,		60,		30,		8
+    LTEXT           "",IDC_TXTINLETSENSORSTATE,	5,		60,		30,		8
+    LTEXT           "",IDC_TXTOUTLETTEMP,		35,		60,		30,		8
+    LTEXT           "",IDC_TXTOUTLETSENSORSTATE,35,		60,		30,		8
+    LTEXT           "",IDC_TXTSYSTEMTEMP,		70,		60,		30,		8
+    LTEXT           "",IDC_TXTSYSTEMSENSORSTATE,70,		60,		30,		8
+    LTEXT           "",IDC_TXT420INPUT,			120,	60,		30,		8
+    LTEXT           "",IDC_TXT420SENSORSTATE,	120,	60,		30,		8
+    LTEXT           "",IDC_TXTSTACKTEMP,		170,	60,		30,		8
+    LTEXT           "",IDC_TXTSTACKSENSORSTATE,	170,	60,		30,		8
+    LTEXT           "",IDC_TXTDHWTEMP,			220,	60,		30,		8
+    LTEXT           "",IDC_TXTDHWSENSORSTATE,	220,	60,		30,		8
+    LTEXT           "",IDC_TXTODTEMP,			270,	60,		30,		8
+    LTEXT           "",IDC_TXTODSENSORSTATE,	270,	60,		30,		8
+    LTEXT           "",IDC_TXTTIME,				230,	190,	119,	10
+    LTEXT           "",IDC_TXTCHPUMPSTATUS,		85,		75,		60,		8
+    LTEXT           "",IDC_TXTDHWPUMPSTATUS,	85,		85,		60,		8
+    LTEXT           "",IDC_TXTSYSPUMPSTATUS,	85,		95,		60,		8
+    LTEXT           "",IDC_TXTBLRPUMPSTATUS,	85,		105,	60,		8
+/*    LTEXT           "",IDC_TXTFLAMESIG,			85,		115,	60,		8*/
+	PUSHBUTTON		"",IDC_BTNTESTING,			5,		114,	120,	11, BS_LEFT
+    LTEXT           "",IDC_TXTCHSETPT,			165,	125,	30,		8
+    LTEXT           "",IDC_TXTDHWSETPT,			165,	135,	30,		8
+    LTEXT           "",IDC_TXTTSLLSETPOINT,		165,	145,	30,		8
+    LTEXT           "",IDC_TXTACTVRATELIM,		210,	75,		90,		8
+    LTEXT           "",IDC_TXTLTDRATE,			210,	85,		60,		8
+    LTEXT           "",IDC_TXTACTVRATEOVRD,		210,	95,		90,		8	
+    LTEXT           "",IDC_TXTOVRDRATE,			210,	105,	60,		8
+    LTEXT           "",IDC_TXTDEMANDRATE,		210,	115,	60,		8
+    LTEXT           "",IDC_TXTCHONHYST,			60,		125,	30,		8
+    LTEXT           "",IDC_TXTACTVDHWONHYST,	60,		135,	30,		8
+    LTEXT           "",IDC_TXTLLONHYSTERESIS,	60,		145,	30,		8
+    LTEXT           "",IDC_TXTCHOFFHYST,		270,	125,	30,		8
+    LTEXT           "",IDC_TXTACTVDHWOFFHYST,	270,	135,	30,		8
+    LTEXT           "",IDC_TXTLLOFFHYSTERESIS,	270,	145,	30,		8
+	PUSHBUTTON		"Connect", IDC_BTNCONNECT,	260,	155		40,		11
+	LTEXT           "Connect type: RTU",IDC_STATIC,	5,		160,	70,		8
+//	RADIOBUTTON		"Direct",IDC_BTNRTUSD,		70,		160,	32,		10, WS_GROUP | WS_TABSTOP | BS_LEFTTEXT | BS_RADIOBUTTON
+//	RADIOBUTTON		"Gateway",IDC_BTNRTUSG,		105,	160,	40,		10, BS_LEFTTEXT | BS_RADIOBUTTON
+//	RADIOBUTTON		"TCP",IDC_BTNTCP,			170,	160,	23,		10,	BS_LEFTTEXT | BS_RADIOBUTTON
+	PUSHBUTTON		"Direct",IDC_BTNRTUSD,		70,		160,	32,		10, WS_GROUP | WS_TABSTOP | BS_LEFTTEXT | BS_AUTORADIOBUTTON
+	PUSHBUTTON		"Gateway",IDC_BTNRTUSG,		105,	160,	40,		10, BS_LEFTTEXT | BS_AUTORADIOBUTTON
+	PUSHBUTTON		"TCP",IDC_BTNTCP,			170,	160,	23,		10,	BS_LEFTTEXT | BS_AUTORADIOBUTTON
+	COMBOBOX		IDC_TCPGWCOMBO,				200,	155,	50,		110, CBS_DROPDOWN|CBS_HASSTRINGS
+	LTEXT           "Com port:",IDC_STATIC,		5,		170,	35,		8
+	PUSHBUTTON		"Polling", IDC_BTNPOLLDLG,	5,		180		30,		10
+//	COMBOBOX		IDC_COMPORTCOMBO,			42,		170,	50,		110, CBS_DROPDOWN | CBS_HASSTRINGS | CBS_SORT
+	COMBOBOX		IDC_COMPORTCOMBO,			42,		170,	50,		110, CBS_DROPDOWN | CBS_HASSTRINGS
+	PUSHBUTTON		"Auto ID",IDC_BTNAUTOID,	100,	173,	45,		10
+	RTEXT			"IP:",IDC_STATIC,			145,	170,	20,		12
+	PUSHBUTTON		"",IDC_BTNIPADDRESS,		170,	170,	60,		12
+	RTEXT			"Port:",IDC_STATIC,			230,	170,	25,		12
+	EDITTEXT		IDC_EDITPORT,				255,	170,	25,		12, ES_NUMBER
+	AUTOCHECKBOX	"Save data @",IDC_CHKSAVEDATA,	125,	185,	55,		10
+	EDITTEXT		IDC_SAVEDATASECSEDIT,		180,		185,	35,		10, ES_NUMBER | ES_RIGHT
+	LTEXT			"second intervals", IDC_SAVEDATASECINTER, 136, 195, 55, 10
+	LTEXT			"Tx",IDC_STATIC,			5,		190,	10,		8
+	CTEXT			"",IDC_TXTTXHB,				15,		190,	8,		8
+	LTEXT			"Rx",IDC_STATIC,			25,		190,	10,		8
+	CTEXT			"",IDC_TXTRXHB,				35,		190,	8,		8
+//	EDITTEXT		IDC_MBADDREDIT,				90,		190,	30,		10, ES_NUMBER
+	COMBOBOX		IDC_CBMBADDR,				90,		190,	30,		100,CBS_HASSTRINGS|WS_VSCROLL|CBS_DROPDOWN|ES_NUMBER
+	LTEXT			"SOLA addr",IDC_STATIC,		50,		190,	40,		8
+END
+
+IDD_NOTICEBOX DIALOGEX DISCARDABLE 20, 20, 170, 62
+STYLE DS_SETFONT | WS_BORDER
+CAPTION ""
+FONT 8, "Verdana"
+BEGIN
+	LTEXT			"",IDC_TXTNOTICE,14,14,130,10
+END
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+1 TEXTINCLUDE  
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE  
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE  
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+//STRINGTABLE  
+//BEGIN
+//   IDC_SOLACOMM   "SOLACOMM"
+//   IDS_APP_TITLE       "SolaComm"
+//   IDS_STATUSPAGE       "Status"
+//   IDS_CHCONFIGPAGE     "CH Configuration"
+//   IDS_ENABLE			"Enable"
+//  IDS_DISABLE			"Disable"
+//   IDS_SENSORONLY		"Sensor only"
+//   IDS_SENSORANDSTAT	"Sensor & STAT terminal"
+//   IDS_SENSORANDREMOTE	"Sensor & Remote Stat"
+//   IDS_LCIANDSENSOR		"LCI & Sensor"
+//END
+
+#endif
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

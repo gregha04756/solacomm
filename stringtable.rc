@@ -1,0 +1,40 @@
+#include <windows.h>
+#include "resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE  
+BEGIN
+   IDC_SOLACOMM   "SOLACOMM"
+   IDS_APP_TITLE       "SolaComm"
+   IDS_SUMMARYPAGE       "Summary"
+   IDS_CHCONFIGPAGE     "CH Config"
+   IDS_ODRESETCFGPAGE   "OD Reset Config"
+   IDS_SYSTEMIDPAGE     "System ID"
+   IDS_DIGITALIOPAGE    "Digital I/O"
+   IDS_ALERTLOGPAGE     "Alert Log"
+   IDS_LOCKOUTLOGPAGE   "Lockout Log"
+   IDS_ENABLE			"Enable"
+   IDS_DISABLE			"Disable"
+   IDS_SENSORONLY		"Sensor only"
+   IDS_SENSORANDSTAT	"STAT terminal"
+   IDS_SENSORANDREMOTE	"Remote Stat"
+   IDS_LCIANDSENSOR		"LCI & Sensor"
+   IDS_UNCONFIGURED		"UNCONFIGURED"
+   IDS_CONNECTING		"Connecting"
+   IDS_NAMEFILTER		"CSV files\0*.csv\0\0"
+   IDS_DEFAULTNAME		"SOLADATA"
+   IDS_DEFAULTEXT		"csv"
+   IDS_ODRESETLINEWND	"ODResetLineWnd"
+   IDS_DHWCONFIGPAGE    "DHW Config"
+   IDS_LLSTATUSPAGE    "LL Status"
+   IDS_LLCONFIGPAGE    "LL Config"
+   IDS_MODCONFIGPAGE    "Mod.+Fan Config"
+   IDS_BCCONFIGPAGE    "Brnr Ctrl Config"
+   IDS_LIMCONFIGPAGE    "Limits Config"
+   IDS_PUMPCONFIGPAGE    "Pump Config"
+   IDS_SAVERESTOREPAGE "Save+Restore"
+END
