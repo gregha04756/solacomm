@@ -1,9 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SolaComm", "SolaComm.vcxproj", "{AEF8B719-8C38-4F19-A769-28E4EECB2627}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B} = {0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}
+		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4} = {F4ED7AC5-5161-41EB-98D1-5E359E239CF4}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NTIWarning", "NTIWarning\NTIWarning.vcxproj", "{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sola_Auto_ID_DLL", "..\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL.vcxproj", "{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +27,10 @@ Global
 		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}.Debug|Win32.Build.0 = Debug|Win32
 		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}.Release|Win32.ActiveCfg = Release|Win32
 		{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}.Release|Win32.Build.0 = Release|Win32
+		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}.Debug|Win32.Build.0 = Debug|Win32
+		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}.Release|Win32.ActiveCfg = Release|Win32
+		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

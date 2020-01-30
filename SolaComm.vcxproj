@@ -62,7 +62,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>strsafe.lib comctl32.lib %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>ws2_32.lib;Report_Error_DLL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>
@@ -70,7 +70,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Debug;D:\Visual Studio Projects\Sola_Testing_DLL\Debug;D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Debug;D:\Visual Studio Projects\Sola_Testing_DLL\Debug;$(TargetDir);D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
