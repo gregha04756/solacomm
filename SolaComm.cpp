@@ -69,7 +69,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	BOOL bWarn = true;
+	BOOL bWarn;
 	BOOL bSuccess = true;
 	BOOL bResult;
 	int i;
@@ -105,6 +105,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	TCHAR szLockoutLogPage[MAX_LOADSTRING];
 	TCHAR szSaveRestorePage[MAX_LOADSTRING];
 	TCHAR szErrMsg[MAX_LOADSTRING];
+	std::wstring ws_COM_arg;
+	LPCOMPORTPARMS p_COM_port_parm;
 	g_hInst = hInstance;
 	nResult = ::LoadString(g_hInst,IDS_APP_TITLE,szTitle,sizeof(szTitle)/sizeof(TCHAR));
 
@@ -134,16 +136,23 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 		nResult = ::MessageBox(NULL,_T("Failed getting command line, aborting"),szTitle,MB_OK);
 		return 0;
 	}
+	p_COM_port_parm = NULL;
 	ppszArgv = ::CommandLineToArgvW(::GetCommandLine(),&nNumArgs);
-	if ( ppszArgv && (nNumArgs == 2) )
+	if ( ppszArgv && (1 < nNumArgs) )
 	{
 		for ( i = 1; i < nNumArgs; i++ )
 		{
+			ws_COM_arg.assign(ppszArgv[i]);
 			nResult = ::wcsncmp(ppszArgv[i],szNoWarn,nWarnCnt);
-			if ( 0 == nResult )
+			bWarn = (std::wstring::npos != ws_COM_arg.find(szNoWarn, 0)) ? false : bWarn;
+			if (std::wstring::npos != ws_COM_arg.find(_T("COM"), 0))
 			{
-				bWarn = false;
-				break;
+				p_COM_port_parm = (LPCOMPORTPARMS)new COMPORTPARMS;
+#if _DEBUG
+				nResult = ws_COM_arg.length();
+				std::wstring ws_temp(ws_COM_arg.substr(3, ws_COM_arg.length() - 3));
+#endif
+				p_COM_port_parm->i_COM_port = std::stoi(ws_COM_arg.substr(3, ws_COM_arg.length() - 3), (size_t*)&nResult);
 			}
 		}
 	}
@@ -325,7 +334,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	psp[0].pszIcon       = NULL;
 	psp[0].pfnDlgProc    = (DLGPROC)SolaSummaryDlgProc;
 	psp[0].pszTitle      = szSummaryPage;
-	psp[0].lParam        = 0;
+	psp[0].lParam        = (LPARAM)p_COM_port_parm;
 
 //Fill out the PROPSHEETPAGE data structure for the Digital I/O page
 	psp[1].dwSize        = sizeof(PROPSHEETPAGE);

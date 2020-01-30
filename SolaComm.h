@@ -62,7 +62,6 @@ DWORD const SOLAREADSGTO = 12000L; /* Sola RTU gateway connect disconnected if n
 #define WM_APPENDPOLLINGDLGTHREAD	WM_APP + 138
 #define WM_APPQUITPOLLINGDLG	WM_APP + 139
 #define WM_APPSAVERESTOREUPD	WM_APP + 140
-#define WM_APPDLGENDING			WM_APP + 141
 #define WM_APPTESTINGDLGENDING	WM_APP + 142
 
 enum PageType {
@@ -214,6 +213,7 @@ typedef struct __tagBitMaskUIParms {unsigned short usValue;LPSOLAMULTIVALUE lpMu
 typedef struct __tagSolaODRCurvePoint {signed short x; signed short y;} SOLAODRCURVEPT, *LPSOLAODRCURVEPT;
 typedef struct __tagMBServerIPParms {unsigned long ulIPAddress;} MBSERVERIPPARMS, *LPMBSERVERIPPARMS;
 typedef struct __tagLoadFileParms {std::ifstream* lpifile;unsigned short* lpparms;short* lpvals;} LOADFILEPARMS, *LPLOADFILEPARMS;
+typedef struct __tagCOMPortParm { int i_COM_port; } COMPORTPARMS, *LPCOMPORTPARMS;
 
 char* const chHoldRegReqID = "struct __tagSolaMBMap *";
 char* const chAlertLogReqID = "struct __tagSolaAlert *";

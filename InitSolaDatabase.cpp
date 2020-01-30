@@ -653,10 +653,18 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 									14, _T("Slave mode > CH & DHW"),
 									15, _T("Slave cmd recvd")};
 
-	static SOLAMULTIVALUE LLMasterSPSrcCodes[] = {	0, _T("Unknown"),
-										1, _T("Normal setpoint"),
-										2, _T("TOD setpoint"),
-										3, _T("OD reset")};
+	static SOLAMULTIVALUE LLMasterSPSrcCodes[] = {
+		0, _T("Unknown"),
+		1, _T("Normal setpoint"),
+		2, _T("TOD setpoint"),
+		3, _T("OD reset"),
+		4, _T("TOD setpoint"),
+		5, _T("Undefined"),
+		6, _T("Undefined"),
+		7, _T("ODR TOD"),
+		8, _T("Reserved,"),
+		8, _T("OD boost")
+	};
 
 #if !TCPPROTONODE
 	static CSolaMBMap::SOLAMBMAP LLStatus[] = {	_T("LL master status"), 0x01, 0x03, 0x00A0, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLMasterStatusCodes, sizeof(LLMasterStatusCodes)/sizeof(SOLAMULTIVALUE),\
@@ -740,7 +748,24 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 								_T("Slv 8 stg ord"), 0x01, 0x03, 0x031F, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
 								_T("Slv 8 rate"), 0x01, 0x03, 0x0320, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
 								_T("Lead boiler addr"), 0x01, 0x03, 0x0321, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-								_T("Master rate"), 0x01, 0x03, 0x0322, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0 };
+								_T("Master rate"), 0x01, 0x03, 0x0322, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+								_T("Actv LL pr stpt"), 0x01, 0x03, 0x03223, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+								_T("Actv LL pr on hyst"), 0x01, 0x03, 0x0324, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("Actv LL pr off hyst"), 0x01, 0x03, 0x0325, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("Actv LL pr op pt"), 0x01, 0x03, 0x0326, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x0327, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x0328, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x0329, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x032a, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x032b, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x032c, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x032d, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x032e, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("RESERVED"), 0x01, 0x03, 0x032f, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("Flap vlv syst st"), 0x01, 0x03, 0x0330, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+								_T("MB rmt OD temp"), 0x01, 0x03, 0x0331, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::ODTemperature, NULL, 0, \
+
+	};
 	
 	pcXLLStatus = (CSolaMBMap*)new CSolaMBMap(XLLStatus, sizeof(XLLStatus)/sizeof(CSolaMBMap::SOLAMBMAP));
 
@@ -1024,9 +1049,30 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 #endif
 	pcFlapValveConfig = (CSolaMBMap*)new CSolaMBMap(FlapValveConfig, sizeof(FlapValveConfig)/sizeof(CSolaMBMap::SOLAMBMAP));
 
-	static CSolaMBMap::SOLAMBMAP X2ModConfig[] = {_T("Stpd mod strt ofst"), 0x01, 0x03, 0x0298, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
+	static SOLAMULTIVALUE AnalogRateTrackingDescriptions[] = {
+0,_T("Disabled"),\
+1,_T("Lcl 4-20"),\
+2,_T("Lcl 0-10"),\
+3,_T("LL 4-20"),\
+4,_T("LL 0-10")
+};
+
+	static SOLAMULTIVALUE ModbusAnalogOutputControlDescriptions[] = {
+0,_T("Disable"),\
+1,_T("4-20mA"),\
+2,_T("0-10V")
+};
+
+	static CSolaMBMap::SOLAMBMAP X2ModConfig[] = {
+		_T("Stpd mod strt ofst"), 0x01, 0x03, 0x0298, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
 		_T("Stpd mod rcycl ofst"), 0x01, 0x03, 0x0299, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
-		_T("Prfrd lightoff rate"), 0x01, 0x03, 0x029a, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0};
+		_T("Prfrd lightoff rate"), 0x01, 0x03, 0x029a, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+		_T("Analog rate tracking"), 0x01, 0x03, 0x029b, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, AnalogRateTrackingDescriptions, sizeof(AnalogRateTrackingDescriptions) / sizeof(SOLAMULTIVALUE),\
+		_T("Modbus Analog Output"), 0x01, 0x03, 0x029c, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Decimal1pl, NULL, 0, \
+		_T("Modbus analog output control"), 0x01, 0x03, 0x029d, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, ModbusAnalogOutputControlDescriptions, sizeof(ModbusAnalogOutputControlDescriptions) / sizeof(SOLAMULTIVALUE), \
+		_T("IAS Open Modulation Step Down Rate"), 0x01, 0x03, 0x029e, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0, \
+		_T("IAS Open Modulation Step Down Time"), 0x01, 0x03, 0x029f, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0
+	};
 
 	pcX2ModConfig = (CSolaMBMap*)new CSolaMBMap(X2ModConfig,sizeof(X2ModConfig)/sizeof(CSolaMBMap::SOLAMBMAP));
 
@@ -1777,7 +1823,7 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 	pcSensorStatus = (CSolaMBMap*)new CSolaMBMap(SensorStatus, sizeof(SensorStatus)/sizeof(CSolaMBMap::SOLAMBMAP));
 
 #if !TCPPROTONODE
-	static CSolaMBMap::SOLAMBMAP ExtendedSensorStatus[] = {	_T("Outdoor temperature"), 0x01, 0x03, 0x00AA, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Temperature, NULL, 0,\
+	static CSolaMBMap::SOLAMBMAP ExtendedSensorStatus[] = {	_T("Outdoor temperature"), 0x01, 0x03, 0x00AA, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::ODTemperature, NULL, 0,\
 										_T("Outdoor sensor state"), 0x01, 0x03, 0x00AB, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::SensorMultivalue, SensorStates, sizeof(SensorStates)/sizeof(SOLAMULTIVALUE),\
 										_T("Outlet T-rise rate"), 0x01, 0x03, 0x00AC, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
 										_T("Exchanger T-rise rate"), 0x01, 0x03, 0x00AD, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
@@ -2170,7 +2216,8 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		2,_T("Application"),
 		3,_T("Brnr ctrl+applctn"),
 		4,_T("Clr alert log"),
-		5,_T("Clr lockout hstry")
+		5,_T("Clr lockout hstry"),
+		6,_T("Clr alarm")
 };
 
 	static CSolaMBMap::SOLAMBMAP SystemConfiguration[] = {	_T("Temp. units"), 0x01, 0x03, 0x00B2, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, TemperatureUnits, sizeof(TemperatureUnits)/sizeof(SOLAMULTIVALUE),\
@@ -2440,6 +2487,7 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 							_T("4-20mA"), 9, pcTrendStatus,
 //							_T("Outdoor"), 7, pcTrendStatus,
 							_T("Outdoor"), 0, pcExtendedSensorStatus,
+//							_T("Outdoor"), 49, pcXLLStatus,
 							_T("Firing rate"), 2, pcTrendStatus,
 							_T("Fan speed"), 3, pcTrendStatus,
 							_T("Flame signal"), 4, pcTrendStatus,
@@ -2462,7 +2510,7 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 							_T("Inlet sensor state"), 6, pcSensorStatus,
 							_T("DHW sensor state"), 7, pcSensorStatus,
 							_T("Stack sensor state"), 8, pcSensorStatus,
-							_T("Outdoor sensor state"), 9, pcSensorStatus,
+							_T("Outdoor sensor state"), 1, pcExtendedSensorStatus,
 							_T("Header sensor state"), 10, pcSensorStatus,
 							_T("Alarm code"), 0, pcAlarmCode,
 							_T("Setpoint"), 23, pcTrendStatus};
@@ -2569,6 +2617,7 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 							_T(""), 0, pcX2ModConfig,
 							_T(""), 1, pcX2ModConfig,
 							_T(""), 2, pcX2ModConfig,
+							_T(""), 3, pcX2ModConfig,
 							_T(""), 6, pcFrostProtConfig};
 
 	pcModConfigPage = (CSolaPage*) new CSolaPage(ModConfigPage,sizeof(ModConfigPage)/sizeof(SOLAPAGE));
@@ -2777,6 +2826,7 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		_T(""), 0, pcSystemIDAppProcessorBuild,
 		_T(""), 0, pcSystemConfiguration,
 		_T(""), 1, pcSystemConfiguration,
+		_T(""), 2, pcSystemConfiguration,
 		_T(""), 6, pcFlapValveConfig,
 		_T(""), 7, pcFlapValveConfig,
 		_T(""), 0, pc_Dup_Burner_Name,

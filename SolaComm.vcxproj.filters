@@ -139,7 +139,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sola_RTU_Serial_Gateway.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

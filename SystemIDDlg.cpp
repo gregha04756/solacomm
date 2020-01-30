@@ -309,6 +309,15 @@ LRESULT CALLBACK SystemIDDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPARAM
 				ssValue = lpNumUIParms->ssValue;
 				delete lpNumUIParms;
 				break;
+			case CSolaMBMap::Minutes:
+				lpNumUIParms = new CSolaMBMap::NUMERICUIPARMS;
+				lpNumUIParms->ssValue = lpMap->GetValue(usRegAddr);
+				lpNumUIParms->szParmName = lpMap->GetParmName(usRegAddr);
+				lpNumUIParms->st = stType;
+				ipResult = ::DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_UITIME), hDlg, UITimeDlgProc, (LPARAM)lpNumUIParms);
+				ssValue = lpNumUIParms->ssValue;
+				delete lpNumUIParms;
+				break;
 			}
 			if ( ipResult == IDOK )
 			{

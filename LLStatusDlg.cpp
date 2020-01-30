@@ -166,6 +166,15 @@ LRESULT CALLBACK LLStatusDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPARAM
 			case CSolaMBMap::Multivalue:
 				if ( pcLLStatus->GetLPMulti(i) != NULL )
 				{
+#if _DEBUG
+					if (2 == i)
+					{
+						k = i;
+						hRes = ::StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%d"), pcLLStatus->GetStartRegAddr(i));
+						k = pcLLStatus->GetValue(i);
+						hRes = ::StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%s"), pcLLStatus->GetLPMulti(i)[pcLLStatus->GetValue(i)].szString);
+					}
+#endif
 					bResult = ::SetDlgItemText(hDlg, TXTIDBASE+(pcLLStatus->GetStartRegAddr(i)), pcLLStatus->GetLPMulti(i)[pcLLStatus->GetValue(i)].szString);
 					if ( !bResult )
 					{

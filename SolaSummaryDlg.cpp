@@ -128,7 +128,7 @@ signed short SolaTempVal(BOOL units, short temp);
 signed short SolaHystVal (BOOL units, short temp );
 sctf RTU_Comm_Thread_Fn;
 static void Scan_Done_Handler(void *p_v);
-static void Dlg_End_Callback(void);
+static void Dlg_End_Callback(void* p_v);
 DWORD Update_Sola_Dev_Coords_UI(HWND &hwnd_dlg,std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS> *lp_sdcl);
 DWORD Update_Modbus_Address_List(HWND &hwnd_dlg,std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS> *lp_sdcl,std::wstring *p_wstr_in);
 DWORD Activate_COM_Port_Selection(HWND &hwnd_dlg,HANDLE &h_COM);
@@ -143,6 +143,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	HWND hTempWnd;
 	HRESULT hRes;
 	BOOL bResult;
+	static BOOL b_COM_parm;
 	static HANDLE hCOM;
 	static HWND hMBAddrSpin;
 	static HWND hSaveDataSecsSpin;
@@ -310,9 +311,19 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 		g_hStartRTUPollEvent = ::CreateEvent(NULL,false,false,NULL);
 		bSuccess = (g_hStartRTUPollEvent != NULL);
-//		g_hReadQuitEvent = ::CreateEvent( NULL,true,false,szReadQuitEvent );
-//		bSuccess = (g_hReadQuitEvent != NULL);
-//		bResult = ::ResetEvent(g_hReadQuitEvent);
+		nRes = 0;
+		b_COM_parm = false;
+		if (NULL != lParam)
+		{
+			LPPROPSHEETPAGE lp_psp = (LPPROPSHEETPAGE)lParam;
+			LPCOMPORTPARMS lp_cpp = (LPCOMPORTPARMS)lp_psp->lParam;
+			if (NULL != lp_cpp)
+			{
+				nRes = lp_cpp->i_COM_port - 1;
+				b_COM_parm = true;
+				delete lp_cpp;
+			}
+		}
 		nCommPort = 0;
 		hCOM = NULL;
 		for ( nCommPort = 1; nCommPort <= MAXCOMPORTS; nCommPort++ )
@@ -320,7 +331,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			hRes = ::StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("COM%d"), nCommPort);
 			lRes = ::SendMessage(::GetDlgItem(hDlg,IDC_COMPORTCOMBO),CB_ADDSTRING,(WPARAM)0,(LPARAM)szTemp);
 		}
-		lRes = ::SendMessage(::GetDlgItem(hDlg,IDC_COMPORTCOMBO),CB_SETCURSEL,(WPARAM)0,(LPARAM)0);
+		lRes = ::SendMessage(::GetDlgItem(hDlg,IDC_COMPORTCOMBO),CB_SETCURSEL,(WPARAM)nRes,(LPARAM)0);
 		dwResult = Init_TCP_GW_Combo(hDlg);
 		bResult = ::CheckRadioButton(hDlg,IDC_BTNRTUSD,IDC_BTNTCP,IDC_BTNRTUSD);
 		lRes = ::SendMessage(::GetDlgItem(hDlg,IDC_COMPORTCOMBO),CB_SHOWDROPDOWN,(WPARAM)false,(LPARAM)0);
@@ -335,29 +346,12 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		bResult = ::EnableWindow(::GetDlgItem(hDlg, IDC_SAVEDATASECINTER), false);
 		nResult = ::LoadString(g_hInst, IDS_NAMEFILTER, szFilter, sizeof(szFilter)/sizeof(TCHAR));
 		nResult = ::LoadString(g_hInst, IDS_DEFAULTEXT, szDefaultExt, sizeof(szDefaultExt)/sizeof(TCHAR));
-/*		bResult = ::SetDlgItemText(hDlg, IDC_MBADDREDIT, szSOLAMBAddr);*/
 		for (i = 1; i <= i_MB_Limit; i++)
 		{
-			mbcb_txt.assign(to_wstring((_ULonglong)i));
+			mbcb_txt.assign(to_wstring((ULONGLONG)i));
 			lRes = SendMessage(GetDlgItem(hDlg,IDC_CBMBADDR),CB_ADDSTRING,(WPARAM)0,(LPARAM)mbcb_txt.c_str());
 			lRes = SendMessage(GetDlgItem(hDlg,IDC_CBMBADDR),CB_SETCURSEL,(WPARAM)0,(LPARAM)0);
 		}
-#if 0
-		hMBAddrSpin = ::CreateWindowEx(	WS_EX_RIGHTSCROLLBAR,
-										UPDOWN_CLASS,
-										_T("MBAddrSpin"),
-										WS_CHILD|WS_VISIBLE|UDS_ALIGNRIGHT|UDS_SETBUDDYINT|UDS_WRAP|UDS_ARROWKEYS,
-										0 /*160*/,
-										0 /*190*/,
-										0 /*10*/,
-										0 /*20*/,
-										hDlg,
-										NULL,
-										g_hInst,
-										NULL);
-		lRes = ::SendMessage(hMBAddrSpin,UDM_SETBUDDY,(WPARAM)(HWND)::GetDlgItem(hDlg,IDC_MBADDREDIT),0);
-		lRes = ::SendMessage(hMBAddrSpin,UDM_SETRANGE,(WPARAM)NULL,MAKELPARAM(250,1));
-#endif
 
 		bResult = ::SetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, nSaveDataSecs, false);
 		hSaveDataSecsSpin =  ::CreateWindowEx(	WS_EX_RIGHTSCROLLBAR,
@@ -750,6 +744,10 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		return true;
 	case  WM_CHILDACTIVATE:
 		Make_Reg_Group_List(pcSummaryPage);
+		if (b_COM_parm)
+		{
+			dwResult = Activate_COM_Port_Selection(hDlg, hCOM);
+		}
 		return true;
 	case WM_APPTRENDUPD:
 			i = MultiByteToWideChar(CP_ACP,
@@ -791,12 +789,13 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 					break;
 				case CSolaMBMap::ODTemperature:
 					/* Determine OD temperature source */
-					switch (pcXSystemConfig->GetValue((int)0))
+					nRes = pcExtendedSensorStatus->GetValue((int)1);
+					switch (nRes)
 					{
-					case 0: /* Unconfigured OD temperature source*/
-						nResult = ::LoadString(g_hInst,IDS_UNCONFIGURED,szTemp,sizeof(szTemp)/sizeof(TCHAR));
+					case 0: /* None */
+						nResult = ::LoadString(g_hInst, IDS_SENSORSTATUSNONE,szTemp,sizeof(szTemp)/sizeof(TCHAR));
 						break;
-					case 1: /* S5 connector */
+					case 1: /* Normal */
 						if ( pcSummaryPage->ItemMap(i)->GetValue(pcSummaryPage->ItemIndex(i)) == (signed short)UNCONFIGUREDTEMP )
 						{
 							nResult = ::LoadString(g_hInst, IDS_UNCONFIGURED, szTemp, sizeof(szTemp)/sizeof(TCHAR));
@@ -819,13 +818,20 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 							}
 						}
 						break;
-					case 2: /* S10 connector */
+					case 2: /* Open */
+						nResult = ::LoadString(g_hInst, IDS_SENSORSTATUSOPEN, szTemp, sizeof(szTemp) / sizeof(TCHAR));
 						break;
-					case 3: /* Modbus */
+					case 3: /* Shorted */
+						nResult = ::LoadString(g_hInst, IDS_SENSORSTATUSSHORTED, szTemp, sizeof(szTemp) / sizeof(TCHAR));
 						break;
-					case 4: /* EnviraCOM sensor */
+					case 4: /* Outside High range */
+						nResult = ::LoadString(g_hInst, IDS_SENSORSTATUSOUTSIDEHIGHRANGE, szTemp, sizeof(szTemp) / sizeof(TCHAR));
 						break;
-					case 5: /* C7089 sensor on S10 connector */
+					case 5: /* Outside Low range */
+						nResult = ::LoadString(g_hInst, IDS_SENSORSTATUSOUTSIDELOWRANGE, szTemp, sizeof(szTemp) / sizeof(TCHAR));
+						break;
+					case 6: /* Not reliable */
+						nResult = ::LoadString(g_hInst, IDS_SENSORSTATUSNOTRELIABLE, szTemp, sizeof(szTemp) / sizeof(TCHAR));
 						break;
 					default:
 						break;
@@ -1671,7 +1677,7 @@ void Scan_Done_Handler(void *p_v)
 	b_r = PostMessage(g_h_Dlg,WM_APPAIDSCANDONECALLBACK,(WPARAM)0,(LPARAM)p_v);
 }
 
-void Dlg_End_Callback(void)
+void Dlg_End_Callback(void* p_v)
 {
 	PostMessage(g_h_Dlg,WM_APPDLGENDING,(WPARAM)0,(LPARAM)0);
 }
@@ -1741,7 +1747,7 @@ DWORD Update_Modbus_Address_List(HWND &hwnd_dlg,std::list<CSola_Auto_ID_DLL::SOL
 	{
 		if (*p_wstr_in == sdc_it->Interface_Name)
 		{
-			l_r = SendMessage(GetDlgItem(hwnd_dlg,IDC_CBMBADDR),CB_ADDSTRING,(WPARAM)0,(LPARAM)to_wstring((_ULonglong)sdc_it->ui8_addr).c_str());
+			l_r = SendMessage(GetDlgItem(hwnd_dlg,IDC_CBMBADDR),CB_ADDSTRING,(WPARAM)0,(LPARAM)to_wstring((ULONGLONG)sdc_it->ui8_addr).c_str());
 		}
 	}
 	l_r = SendMessage(GetDlgItem(hwnd_dlg,IDC_CBMBADDR),CB_SETCURSEL,(WPARAM)0,(LPARAM)0);
@@ -1761,33 +1767,30 @@ DWORD Activate_COM_Port_Selection(HWND &hwnd_dlg,HANDLE &h_COM)
 	TCHAR sz_Err_Msg[100];
 	std::wstring wstr_cps;
 	dw_rc = ERROR_SUCCESS;
-			if (NULL != h_COM)
-			{
-				b_r = ::CloseHandle(h_COM);
-				h_COM = NULL;
-			}
-			p_v = SecureZeroMemory((PVOID)sz_Comm_Port_Sel,sizeof(sz_Comm_Port_Sel));
-			i_ncp = (int)::SendMessage(::GetDlgItem(hwnd_dlg,IDC_COMPORTCOMBO),CB_GETCURSEL,(WPARAM)0,(LPARAM)0);
-			l_r = SendMessage(::GetDlgItem(hwnd_dlg,IDC_COMPORTCOMBO),CB_GETLBTEXT,(WPARAM)i_ncp,(LPARAM)sz_Comm_Port_Sel);
-			wstr_cps.assign(sz_Comm_Port_Sel);
-			i_ncp= stoi(wstr_cps.erase(0,3));
-			dw_rc = OpenCOMPort(hwnd_dlg,i_ncp,h_COM);
-			if ( hwnd_dlg == NULL )
-			{
-				h_r = ::StringCchPrintf(sz_Err_Msg,sizeof(sz_Err_Msg)/sizeof(TCHAR),_T("Can't open COM port %d, pls retry"),i_ncp);
-				i_r = ::MessageBox(NULL,sz_Err_Msg,szTitle,MB_OK);
-				b_r = ::EnableWindow(::GetDlgItem(hwnd_dlg,IDC_BTNCONNECT),false);
-#if 0
-				b_r = ::EnableWindow(::GetDlgItem(hwnd_dlg,IDC_BTNPOLLDLG),false);
-#endif
-			}
-			else
-			{
-				b_r = ::EnableWindow(::GetDlgItem(hwnd_dlg,IDC_BTNCONNECT),true);
-#if 0
-				b_r = ::EnableWindow(::GetDlgItem(hwnd_dlg,IDC_BTNPOLLDLG),true);
-#endif
-			}
+	if ((NULL != h_COM) && !bSolaConnected)
+	{
+		b_r = ::CloseHandle(h_COM);
+		h_COM = NULL;
+	}
+	if (!bSolaConnected)
+	{
+		p_v = SecureZeroMemory((PVOID)sz_Comm_Port_Sel, sizeof(sz_Comm_Port_Sel));
+		i_ncp = (int)::SendMessage(::GetDlgItem(hwnd_dlg, IDC_COMPORTCOMBO), CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+		l_r = SendMessage(::GetDlgItem(hwnd_dlg, IDC_COMPORTCOMBO), CB_GETLBTEXT, (WPARAM)i_ncp, (LPARAM)sz_Comm_Port_Sel);
+		wstr_cps.assign(sz_Comm_Port_Sel);
+		i_ncp = stoi(wstr_cps.erase(0, 3));
+		dw_rc = OpenCOMPort(hwnd_dlg, i_ncp, h_COM);
+		if (hwnd_dlg == NULL)
+		{
+			h_r = ::StringCchPrintf(sz_Err_Msg, sizeof(sz_Err_Msg) / sizeof(TCHAR), _T("Can't open COM port %d, pls retry"), i_ncp);
+			i_r = ::MessageBox(NULL, sz_Err_Msg, szTitle, MB_OK);
+			b_r = ::EnableWindow(::GetDlgItem(hwnd_dlg, IDC_BTNCONNECT), false);
+		}
+		else
+		{
+			b_r = ::EnableWindow(::GetDlgItem(hwnd_dlg, IDC_BTNCONNECT), true);
+		}
+	}
 	return dw_rc;
 }
 
