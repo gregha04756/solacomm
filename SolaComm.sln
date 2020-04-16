@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NTIWarning", "NTIWarning\NT
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sola_Auto_ID_DLL", "..\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL.vcxproj", "{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sola_Testing_DLL", "..\Sola_Testing_DLL\Sola_Testing_DLL\Sola_Testing_DLL.vcxproj", "{E7F26082-61CE-4CD6-9ED6-27CAD833C3F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}.Debug|Win32.Build.0 = Debug|Win32
 		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}.Release|Win32.ActiveCfg = Release|Win32
 		{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}.Release|Win32.Build.0 = Release|Win32
+		{E7F26082-61CE-4CD6-9ED6-27CAD833C3F7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E7F26082-61CE-4CD6-9ED6-27CAD833C3F7}.Debug|Win32.Build.0 = Debug|Win32
+		{E7F26082-61CE-4CD6-9ED6-27CAD833C3F7}.Release|Win32.ActiveCfg = Release|Win32
+		{E7F26082-61CE-4CD6-9ED6-27CAD833C3F7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
