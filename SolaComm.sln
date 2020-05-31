@@ -12,10 +12,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SolaComm", "SolaComm.vcxpro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NTIWarning", "NTIWarning\NTIWarning.vcxproj", "{F4ED7AC5-5161-41EB-98D1-5E359E239CF4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249} = {C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sola_Auto_ID_DLL", "..\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL.vcxproj", "{0A264B8D-BE43-4831-A1E0-CEC54AE7F16B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249} = {C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sola_Testing_DLL", "..\Sola_Testing_DLL\Sola_Testing_DLL\Sola_Testing_DLL.vcxproj", "{E7F26082-61CE-4CD6-9ED6-27CAD833C3F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249} = {C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Report_Error_DLL", "..\Report_Error_DLL\Report_Error_DLL\Report_Error_DLL.vcxproj", "{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}"
 EndProject
