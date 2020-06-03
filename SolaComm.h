@@ -7,6 +7,9 @@ using namespace std;
 DWORD const SOLAREADSDTO = 5000L; /* Sola RTU direct connect disconnected if no data read for # of milliseconds */
 DWORD const SOLAREADSGTO = 12000L; /* Sola RTU gateway connect disconnected if no data read for # of milliseconds */
 
+extern "C++" const int i_SB_nWidth_factor;
+extern "C++" const int i_SB_nMax_value;
+
 #define MAX_LOADSTRING 100
 
 #define MBCRCSIZE 2

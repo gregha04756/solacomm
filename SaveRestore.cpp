@@ -55,6 +55,9 @@ extern "C++" std::list<CSolaMBMap*> *Make_Reg_Group_List(CSolaPage* p_page);
 
 const TCHAR szInvalidChars[] = {L'<',L'>',L';',L':',L'"',L'/',L'\\',L'|',L'?',L'*',L'\0'};
 
+const int i_SB_nWidth_factor = 4;
+const int i_SB_nMax_value = 8;
+
 BOOL MakeValidFileName(TCHAR* lpfn,size_t fnmaxlen)
 {
 	volatile TCHAR tcharTestChar;
@@ -75,6 +78,9 @@ BOOL MakeValidFileName(TCHAR* lpfn,size_t fnmaxlen)
 
 LRESULT CALLBACK SaveRestoreDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPARAM lParam)
 {
+#if defined(_DEBUG)
+	GUITHREADINFO gti_guithreadinfo;
+#endif
 	BOOL bOkCRC;
 	static BOOL bSaveOK;
 	static int nPageIndex;
@@ -173,18 +179,21 @@ LRESULT CALLBACK SaveRestoreDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			nControlIDMax = nControlIDMax > nResult ? nControlIDMax : nResult;
 		}
 		bResult = ::GetClientRect(hDlg,&crectDlg);
-		hwndScrollLeftRightBar = ::CreateWindowEx(	WS_EX_LEFT | SBS_HORZ,
-												WC_SCROLLBAR,
-												NULL,
-												WS_CHILD | WS_VISIBLE,
-												crectDlg.left,
-												0,
-												2*(crectDlg.right-crectDlg.left),
-												15,
-												hDlg,
-												NULL,
-												g_hInst,
-												NULL);
+		hwndScrollLeftRightBar = ::CreateWindowEx(
+			WS_EX_LEFT | SBS_HORZ,
+			WC_SCROLLBAR,
+			NULL,
+			WS_CHILD | WS_VISIBLE,
+			crectDlg.left,
+			0,
+			i_SB_nWidth_factor*(crectDlg.right-crectDlg.left), /* nWidth value to be adjusted with si.nMax value set by SetScrollInfo just below */
+			15,
+			hDlg,
+			NULL,
+			g_hInst,
+			NULL
+		);
+
 		if ( (dwResult = ::GetLastError() != NOERROR ) )
 		{
 			ReportError(dwResult);
@@ -195,7 +204,7 @@ LRESULT CALLBACK SaveRestoreDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			si.fMask = SIF_ALL;
 			bResult = ::GetScrollInfo(hwndScrollLeftRightBar,SB_CTL,&si);
 			si.fMask = SIF_ALL;
-			si.nMax = 3;
+			si.nMax = i_SB_nMax_value; /* Increase this value to allow more parameters to be scrolled into view */
 			si.nMin = 0;
 			si.nPage = 1;
 			si.nPos = 0;
@@ -682,6 +691,9 @@ LRESULT CALLBACK SaveRestoreDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 					{
 						if ( lpLFParms->lpifile->is_open() )
 						{
+#if defined (_DEBUG)
+							bResult = GetGUIThreadInfo(NULL, &gti_guithreadinfo);
+#endif
 							ipResult = IDCANCEL;
 							if ( NULL != lpLFParms )
 							{
