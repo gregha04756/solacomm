@@ -17,6 +17,9 @@ extern "C++" CSolaMBMap* pcSystemConfiguration;
 extern "C++" float TempVal(BOOL units,short temp);
 extern "C++" float HystVal(BOOL units,short temp);
 
+extern "C++" const int i_SB_nWidth_factor;
+extern "C++" const int i_SB_nMax_value;
+
 INT_PTR CALLBACK LoadParmsDlgProc(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 {
 	BOOL bResult;
@@ -391,7 +394,7 @@ INT_PTR CALLBACK LoadParmsDlgProc(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
 												WS_CHILD | WS_VISIBLE,
 												crectDlg.left,
 												0,
-												2*(crectDlg.right-crectDlg.left),
+												i_SB_nWidth_factor*(crectDlg.right-crectDlg.left), /* Match multiplier to same setting in SaveRestore scrollbar */
 												15,
 												hDlg,
 												NULL,
@@ -407,7 +410,7 @@ INT_PTR CALLBACK LoadParmsDlgProc(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
 			si.fMask = SIF_ALL;
 			bResult = ::GetScrollInfo(hwndScrollLeftRightBar,SB_CTL,&si);
 			si.fMask = SIF_ALL;
-			si.nMax = 3;
+			si.nMax = i_SB_nMax_value;  /* Match value to same setting in SaveRestore scrollbar */
 			si.nMin = 0;
 			si.nPage = 1;
 			si.nPos = 0;

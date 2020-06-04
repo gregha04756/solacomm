@@ -71,7 +71,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Debug;D:\Visual Studio Projects\Sola_Testing_DLL\Debug;$(TargetDir);D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TargetDir);D:\Visual Studio Projects\Sola_Auto_ID_DLL\Debug;D:\Visual Studio Projects\Sola_Testing_DLL\Debug;$(TargetDir);D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -94,7 +94,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>$(TargetDir);D:\Visual Studio Projects\Sola_Testing_DLL\Release;D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TargetDir);$(TargetDir);D:\Visual Studio Projects\Sola_Testing_DLL\Release;D:\Visual Studio Projects\Report_Error_DLL\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
