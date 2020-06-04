@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#define CONFIGFILEBUFLEN 2800
+#define CONFIGFILEBUFLEN 4000
 
 CRITICAL_SECTION g_SaveRestoreCritSect;
 const TCHAR* szSaveRestoreQuitEvent = {_T("SaveRestoreQuitEvent")};
@@ -56,7 +56,7 @@ extern "C++" std::list<CSolaMBMap*> *Make_Reg_Group_List(CSolaPage* p_page);
 const TCHAR szInvalidChars[] = {L'<',L'>',L';',L':',L'"',L'/',L'\\',L'|',L'?',L'*',L'\0'};
 
 const int i_SB_nWidth_factor = 4;
-const int i_SB_nMax_value = 8;
+const int i_SB_nMax_value = 9;
 
 BOOL MakeValidFileName(TCHAR* lpfn,size_t fnmaxlen)
 {
@@ -179,6 +179,7 @@ LRESULT CALLBACK SaveRestoreDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			nControlIDMax = nControlIDMax > nResult ? nControlIDMax : nResult;
 		}
 		bResult = ::GetClientRect(hDlg,&crectDlg);
+		hwndScrollLeftRightBar = NULL;
 		hwndScrollLeftRightBar = ::CreateWindowEx(
 			WS_EX_LEFT | SBS_HORZ,
 			WC_SCROLLBAR,
@@ -194,9 +195,9 @@ LRESULT CALLBACK SaveRestoreDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			NULL
 		);
 
-		if ( (dwResult = ::GetLastError() != NOERROR ) )
+		if (!hwndScrollLeftRightBar)
 		{
-			ReportError(dwResult);
+			ReportError(::GetLastError());
 		}
 		if ( hwndScrollLeftRightBar )
 		{

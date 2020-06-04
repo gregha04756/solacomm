@@ -141,22 +141,24 @@ BOOL InitSolaDatabase()
 											14, _T("Reserved"),
 											15, _T("Reserved")};
 
-	static CSolaMBMap::SOLAMBMAP ODResetConfig[] = {_T("CH ODR max OD temp"), 0x01, 0x03, 0x0200, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("CH ODR min OD temp"), 0x01, 0x03, 0x0201, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("CH ODR low wtr temp"), 0x01, 0x03, 0x0202, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("CH ODR bst time"), 0x01, 0x03, 0x0203, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-										_T("CH ODR max off pt"), 0x01, 0x03, 0x0204, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("LL CH ODR max OD temp"), 0x01, 0x03, 0x0205, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("LL CH ODR min OD temp"), 0x01, 0x03, 0x0206, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("LL CH ODR low wtr temp"), 0x01, 0x03, 0x0207, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("LL CH ODR bst time"), 0x01, 0x03, 0x0208, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Timevalue, NULL, 0,\
-										_T("LL CH ODR max off pt"), 0x01, 0x03, 0x0209, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("CH ODR bst step"), 0x01, 0x03, 0x020A, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Hysteresis, NULL, 0,\
-										_T("CH ODR bst rcvry step time"), 0x01, 0x03, 0x020B, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Timevalue, NULL , 0,\
-										_T("LL ODR bst step"), 0x01, 0x03, 0x020C, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Hysteresis, NULL, 0,\
-										_T("LL ODR bst rcvry step time"), 0x01, 0x03, 0x020D, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Timevalue, NULL , 0,\
-										_T("Min blr temp"), 0x01, 0x03, 0x020E, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-										_T("LL CH ODR min blr temp"), 0x01, 0x03, 0x020F, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0};
+	static CSolaMBMap::SOLAMBMAP ODResetConfig[] = {
+		_T("CH ODR max OD T"), 0x01, 0x03, 0x0200, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("CH ODR min OD T"), 0x01, 0x03, 0x0201, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("CH ODR low wtr T"), 0x01, 0x03, 0x0202, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("CH ODR bst time"), 0x01, 0x03, 0x0203, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("CH ODR max off pt"), 0x01, 0x03, 0x0204, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL CH ODR max OD T"), 0x01, 0x03, 0x0205, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL CH ODR min OD T"), 0x01, 0x03, 0x0206, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL CH ODR low wtr T"), 0x01, 0x03, 0x0207, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL CH ODR bst time"), 0x01, 0x03, 0x0208, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Timevalue, NULL, 0,\
+		_T("LL CH ODR max off pt"), 0x01, 0x03, 0x0209, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("CH ODR bst step"), 0x01, 0x03, 0x020A, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Hysteresis, NULL, 0,\
+		_T("CH ODR bst rcvry step time"), 0x01, 0x03, 0x020B, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Timevalue, NULL , 0,\
+		_T("LL ODR bst step"), 0x01, 0x03, 0x020C, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Hysteresis, NULL, 0,\
+		_T("LL ODR bst rcvry step time"), 0x01, 0x03, 0x020D, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Timevalue, NULL , 0,\
+		_T("Min blr T"), 0x01, 0x03, 0x020E, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL CH ODR min blr T"), 0x01, 0x03, 0x020F, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::TemperatureSetpoint, NULL, 0\
+	};
 
 	pcODResetConfig = (CSolaMBMap*)new CSolaMBMap(ODResetConfig, sizeof(ODResetConfig)/sizeof(CSolaMBMap::SOLAMBMAP));
 
@@ -604,38 +606,40 @@ _T("Annunc. mode"), 0x01, 0x03, 0x0131, 0x0001, 0, true, true, true, NULL, 0,  C
 2,_T("Enabled for purge+ignition"),
 3,_T("Enabled all states")};
 
-	static CSolaMBMap::SOLAMBMAP BurnerControlConfig[] = {_T("Ignition src"), 0x01, 0x03, 0x00e0, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgnitionSources, sizeof(IgnitionSources)/sizeof(SOLAMULTIVALUE),\
-_T("BLR/HSI func."), 0x01, 0x03, 0x00e1, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, BlowerHSIFuncs, sizeof(BlowerHSIFuncs)/sizeof(SOLAMULTIVALUE),\
-_T("Ign. on during"), 0x01, 0x03, 0x00e2, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgniterDuration, sizeof(IgniterDuration)/sizeof(SOLAMULTIVALUE),\
-_T("Pilot type"), 0x01, 0x03, 0x00e3, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, PilotTypes, sizeof(PilotTypes)/sizeof(SOLAMULTIVALUE),\
-_T("Flame sens. type"), 0x01, 0x03, 0x00e4, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, FlameSensorTypes, sizeof(FlameSensorTypes)/sizeof(SOLAMULTIVALUE),\
-_T("Purge rate prvng."), 0x01, 0x03, 0x00e5, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, PurgeRateProvingTypes, sizeof(PurgeRateProvingTypes)/sizeof(SOLAMULTIVALUE),\
-_T("Lightoff rate prvng."), 0x01, 0x03, 0x00e6, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, LightoffRateProvingTypes, sizeof(LightoffRateProvingTypes)/sizeof(SOLAMULTIVALUE),\
-_T("Prepurge time"), 0x01, 0x03, 0x00e7, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-_T("Pre-ignition time"), 0x01, 0x03, 0x00e8, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-_T("Pilot flame estab. pd."), 0x01, 0x03, 0x00e9, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, PilotFlameEstablishTimes, sizeof(PilotFlameEstablishTimes)/sizeof(SOLAMULTIVALUE),\
-_T("Main flame estab. pd."), 0x01, 0x03, 0x00ea, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, MainFlameEstablishTimes, sizeof(MainFlameEstablishTimes)/sizeof(SOLAMULTIVALUE),\
-_T("Run stblz. time"), 0x01, 0x03, 0x00eb, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-_T("Postpurge time"), 0x01, 0x03, 0x00ec, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-_T("Intlk. strt. chk. nbl."), 0x01, 0x03, 0x00ed, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockStartChecks, sizeof(InterlockStartChecks)/sizeof(SOLAMULTIVALUE),\
-_T("Intlk. open resp."), 0x01, 0x03, 0x00ee, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockOpenResponses, sizeof(InterlockOpenResponses)/sizeof(SOLAMULTIVALUE),\
-_T("Ignite fail resp."), 0x01, 0x03, 0x00ef, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgniteFailureResponses, sizeof(IgniteFailureResponses)/sizeof(SOLAMULTIVALUE),\
-_T("Ignite fail retries"), 0x01, 0x03, 0x00f0, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgniteFailureRetries, sizeof(IgniteFailureRetries)/sizeof(SOLAMULTIVALUE),\
-_T("Ignite fail delay"), 0x01, 0x03, 0x00f1, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-_T("MFEP flame fail resp."), 0x01, 0x03, 0x00f2, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockOpenResponses, sizeof(InterlockOpenResponses)/sizeof(SOLAMULTIVALUE),\
-_T("Run flame fail resp."), 0x01, 0x03, 0x00f3, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockOpenResponses, sizeof(InterlockOpenResponses)/sizeof(SOLAMULTIVALUE),\
-_T("Pilot test hold"), 0x01, 0x03, 0x00f4, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
-_T("RESERVED"), 0x01, 0x03, 0x00f5, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-_T("IAS enable"), 0x01, 0x03, 0x00f6, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterruptedAirSwitchEnables, sizeof(InterruptedAirSwitchEnables)/sizeof(SOLAMULTIVALUE),\
-_T("IAS strt. chk. nbl."), 0x01, 0x03, 0x00f7, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
-_T("LCI enable"), 0x01, 0x03, 0x00f8, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
-_T("PII enable"), 0x01, 0x03, 0x00f9, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
-_T("Flame threshold"), 0x01, 0x03, 0x00fa, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Decimal1pl, NULL, 0,\
-_T("RESERVED"), 0x01, 0x03, 0x00fb, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-_T("RESERVED"), 0x01, 0x03, 0x00fc, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-_T("ILK/LCI bounce detect"), 0x01, 0x03, 0x00fd, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
-_T("Frcd. rcyc. intrvl."), 0x01, 0x03, 0x00fe, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-_T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE)};
+	static CSolaMBMap::SOLAMBMAP BurnerControlConfig[] = {
+		_T("Ignition src"), 0x01, 0x03, 0x00e0, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgnitionSources, sizeof(IgnitionSources)/sizeof(SOLAMULTIVALUE),\
+		_T("BLR/HSI func."), 0x01, 0x03, 0x00e1, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, BlowerHSIFuncs, sizeof(BlowerHSIFuncs)/sizeof(SOLAMULTIVALUE),\
+		_T("Ign. on during"), 0x01, 0x03, 0x00e2, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgniterDuration, sizeof(IgniterDuration)/sizeof(SOLAMULTIVALUE),\
+		_T("Pilot type"), 0x01, 0x03, 0x00e3, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, PilotTypes, sizeof(PilotTypes)/sizeof(SOLAMULTIVALUE),\
+		_T("Flame sens. type"), 0x01, 0x03, 0x00e4, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, FlameSensorTypes, sizeof(FlameSensorTypes)/sizeof(SOLAMULTIVALUE),\
+		_T("Purge rate prvng."), 0x01, 0x03, 0x00e5, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, PurgeRateProvingTypes, sizeof(PurgeRateProvingTypes)/sizeof(SOLAMULTIVALUE),\
+		_T("Lightoff rate prvng."), 0x01, 0x03, 0x00e6, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, LightoffRateProvingTypes, sizeof(LightoffRateProvingTypes)/sizeof(SOLAMULTIVALUE),\
+		_T("Prepurge time"), 0x01, 0x03, 0x00e7, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("Pre-ignition time"), 0x01, 0x03, 0x00e8, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("Pilot flame estab. pd."), 0x01, 0x03, 0x00e9, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, PilotFlameEstablishTimes, sizeof(PilotFlameEstablishTimes)/sizeof(SOLAMULTIVALUE),\
+		_T("Main flame estab. pd."), 0x01, 0x03, 0x00ea, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, MainFlameEstablishTimes, sizeof(MainFlameEstablishTimes)/sizeof(SOLAMULTIVALUE),\
+		_T("Run stblz. time"), 0x01, 0x03, 0x00eb, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("Postpurge time"), 0x01, 0x03, 0x00ec, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("Intlk. strt. chk. nbl."), 0x01, 0x03, 0x00ed, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockStartChecks, sizeof(InterlockStartChecks)/sizeof(SOLAMULTIVALUE),\
+		_T("Intlk. open resp."), 0x01, 0x03, 0x00ee, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockOpenResponses, sizeof(InterlockOpenResponses)/sizeof(SOLAMULTIVALUE),\
+		_T("Ignite fail resp."), 0x01, 0x03, 0x00ef, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgniteFailureResponses, sizeof(IgniteFailureResponses)/sizeof(SOLAMULTIVALUE),\
+		_T("Ignite fail retries"), 0x01, 0x03, 0x00f0, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, IgniteFailureRetries, sizeof(IgniteFailureRetries)/sizeof(SOLAMULTIVALUE),\
+		_T("Ignite fail delay"), 0x01, 0x03, 0x00f1, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("MFEP flame fail resp."), 0x01, 0x03, 0x00f2, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockOpenResponses, sizeof(InterlockOpenResponses)/sizeof(SOLAMULTIVALUE),\
+		_T("Run flame fail resp."), 0x01, 0x03, 0x00f3, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterlockOpenResponses, sizeof(InterlockOpenResponses)/sizeof(SOLAMULTIVALUE),\
+		_T("Pilot test hold"), 0x01, 0x03, 0x00f4, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("RESERVED"), 0x01, 0x03, 0x00f5, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("IAS enable"), 0x01, 0x03, 0x00f6, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, InterruptedAirSwitchEnables, sizeof(InterruptedAirSwitchEnables)/sizeof(SOLAMULTIVALUE),\
+		_T("IAS strt. chk. nbl."), 0x01, 0x03, 0x00f7, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("LCI enable"), 0x01, 0x03, 0x00f8, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("PII enable"), 0x01, 0x03, 0x00f9, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Flame threshold"), 0x01, 0x03, 0x00fa, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Decimal1pl, NULL, 0,\
+		_T("RESERVED"), 0x01, 0x03, 0x00fb, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("RESERVED"), 0x01, 0x03, 0x00fc, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("ILK/LCI bounce detect"), 0x01, 0x03, 0x00fd, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Frcd. rcyc. intrvl."), 0x01, 0x03, 0x00fe, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE)
+	};
 
 	pcBurnerControlConfig = (CSolaMBMap*)new CSolaMBMap(BurnerControlConfig,sizeof(BurnerControlConfig)/sizeof(CSolaMBMap::SOLAMBMAP));
 
@@ -829,38 +833,40 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 	static SOLAMULTIVALUE LLLeadLagAllocationMethodCodes[] = {	0, _T("Seq order rtn"),
 															1, _T("Lwst msrd run time")};
 
-	static CSolaMBMap::SOLAMBMAP LLConfig[] = {	_T("Slv enbl"), 0x01, 0x03, 0x0220, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLSlaveEnableCodes, sizeof(LLSlaveEnableCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Mstr enbl"), 0x01, 0x03, 0x0221, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLMasterEnableCodes, sizeof(LLMasterEnableCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Setpoint"), 0x01, 0x03, 0x0222, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-									_T("TOD setpoint"), 0x01, 0x03, 0x0223, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-									_T("OD reset enbl"), 0x01, 0x03, 0x0224, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, DHWEnableList, sizeof(DHWEnableList)/sizeof(SOLAMULTIVALUE),\
-									_T("On hyst"), 0x01, 0x03, 0x0225, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
-									_T("Off hyst"), 0x01, 0x03, 0x0226, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
-									_T("Hyst step time"), 0x01, 0x03, 0x0227, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-									_T("P-gain"), 0x01, 0x03, 0x0228, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-									_T("I-gain"), 0x01, 0x03, 0x0229, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-									_T("D-gain"), 0x01, 0x03, 0x022A, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-									_T("Op sw"), 0x01, 0x03, 0x022B, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, BooleanCodes, sizeof(BooleanCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("CH dmnd sw"), 0x01, 0x03, 0x022C, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLCHDemandSwitchCodes, sizeof(LLCHDemandSwitchCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("CH stpt src"), 0x01, 0x03, 0x022D, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLCHSetpointSourceCodes, sizeof(LLCHSetpointSourceCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Mod snsr"), 0x01, 0x03, 0x022E, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLModulationSensorCodes, sizeof(LLModulationSensorCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Bkup mod snsr"), 0x01, 0x03, 0x022F, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLBackupModulationSensorCodes, sizeof(LLBackupModulationSensorCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("CH 4ma tmp"), 0x01, 0x03, 0x0230, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-									_T("CH 20ma tmp"), 0x01, 0x03, 0x0231, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-									_T("CH Mbus stpt"), 0x01, 0x03, 0x0232, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
-									_T("CH Mbus STAT"), 0x01, 0x03, 0x0233, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLCHModbusSTATCodes, sizeof(LLCHModbusSTATCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Slave mode"), 0x01, 0x03, 0x0234, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLSlaveModeCodes, sizeof(LLSlaveModeCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Slave cmd"), 0x01, 0x03, 0x0235, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Bitmask, LLSlaveCommandCodes, sizeof(LLSlaveCommandCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Bs ld rt"), 0x01, 0x03, 0x0236, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-									_T("Fn drng off ccl rt"), 0x01, 0x03, 0x0237, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-									_T("Slv seq order"), 0x01, 0x03, 0x0238, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-									_T("Mbus port"), 0x01, 0x03, 0x0239, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLModbusPortCodes, sizeof(LLModbusPortCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Slv d-t-f dly"), 0x01, 0x03, 0x023A, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
-									_T("Slv cpcty"), 0x01, 0x03, 0x023B, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-									_T("Base ld comm rt"), 0x01, 0x03, 0x023C, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Percentvalue, NULL, 0,\
-									_T("Rt alloc mthd"), 0x01, 0x03, 0x023D, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLRateAllocationMethodCodes, sizeof(LLRateAllocationMethodCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Ld alloc mthd"), 0x01, 0x03, 0x023E, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLLeadLagAllocationMethodCodes, sizeof(LLLeadLagAllocationMethodCodes)/sizeof(SOLAMULTIVALUE),\
-									_T("Lg alloc mthd"), 0x01, 0x03, 0x023F, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLLeadLagAllocationMethodCodes, sizeof(LLLeadLagAllocationMethodCodes)/sizeof(SOLAMULTIVALUE)};
+	static CSolaMBMap::SOLAMBMAP LLConfig[] = {
+		_T("LL Slv enbl"), 0x01, 0x03, 0x0220, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLSlaveEnableCodes, sizeof(LLSlaveEnableCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("LL Mstr enbl"), 0x01, 0x03, 0x0221, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLMasterEnableCodes, sizeof(LLMasterEnableCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("LL CH Stpnt"), 0x01, 0x03, 0x0222, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL TOD stpnt"), 0x01, 0x03, 0x0223, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL OD rst enbl"), 0x01, 0x03, 0x0224, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, DHWEnableList, sizeof(DHWEnableList)/sizeof(SOLAMULTIVALUE),\
+		_T("LL On hyst"), 0x01, 0x03, 0x0225, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
+		_T("LL Off hyst"), 0x01, 0x03, 0x0226, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0,\
+		_T("LL Hystptm"), 0x01, 0x03, 0x0227, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("LL P-gain"), 0x01, 0x03, 0x0228, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("LL I-gain"), 0x01, 0x03, 0x0229, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("LL D-gain"), 0x01, 0x03, 0x022A, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("LL Op sw"), 0x01, 0x03, 0x022B, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, BooleanCodes, sizeof(BooleanCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("LL CH dmnd sw"), 0x01, 0x03, 0x022C, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLCHDemandSwitchCodes, sizeof(LLCHDemandSwitchCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("LL CH stpt src"), 0x01, 0x03, 0x022D, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLCHSetpointSourceCodes, sizeof(LLCHSetpointSourceCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("LL Mod snsr"), 0x01, 0x03, 0x022E, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLModulationSensorCodes, sizeof(LLModulationSensorCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Bkup mod snsr"), 0x01, 0x03, 0x022F, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLBackupModulationSensorCodes, sizeof(LLBackupModulationSensorCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("LL CH 4mA T"), 0x01, 0x03, 0x0230, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("LL CH 20mA T"), 0x01, 0x03, 0x0231, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("CH Mbus stpt"), 0x01, 0x03, 0x0232, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
+		_T("CH Mbus STAT"), 0x01, 0x03, 0x0233, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLCHModbusSTATCodes, sizeof(LLCHModbusSTATCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Slave mode"), 0x01, 0x03, 0x0234, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLSlaveModeCodes, sizeof(LLSlaveModeCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Slave cmd"), 0x01, 0x03, 0x0235, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Bitmask, LLSlaveCommandCodes, sizeof(LLSlaveCommandCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Bs ld rt"), 0x01, 0x03, 0x0236, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Fn drng off ccl rt"), 0x01, 0x03, 0x0237, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Slv seq order"), 0x01, 0x03, 0x0238, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Mbus port"), 0x01, 0x03, 0x0239, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLModbusPortCodes, sizeof(LLModbusPortCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Slv d-t-f dly"), 0x01, 0x03, 0x023A, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0,\
+		_T("Slv cpcty"), 0x01, 0x03, 0x023B, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Base ld comm rt"), 0x01, 0x03, 0x023C, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Percentvalue, NULL, 0,\
+		_T("Rt alloc mthd"), 0x01, 0x03, 0x023D, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLRateAllocationMethodCodes, sizeof(LLRateAllocationMethodCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Ld alloc mthd"), 0x01, 0x03, 0x023E, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLLeadLagAllocationMethodCodes, sizeof(LLLeadLagAllocationMethodCodes)/sizeof(SOLAMULTIVALUE),\
+		_T("Lg alloc mthd"), 0x01, 0x03, 0x023F, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLLeadLagAllocationMethodCodes, sizeof(LLLeadLagAllocationMethodCodes)/sizeof(SOLAMULTIVALUE)\
+	};
 
 	pcLLConfig = (CSolaMBMap*)new CSolaMBMap(LLConfig, sizeof(LLConfig)/sizeof(CSolaMBMap::SOLAMBMAP));
 
@@ -899,7 +905,8 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		3,_T("All off&drop lead @ thrshld")};
 
 #if !TCPPROTONODE
-	static CSolaMBMap::SOLAMBMAP XLLConfig[] = {_T("LL DHW dmnd sw."), 0x01, 0x03, 0x02c0, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLDHWDemandSwitch, sizeof(LLDHWDemandSwitch)/sizeof(SOLAMULTIVALUE),\
+	static CSolaMBMap::SOLAMBMAP XLLConfig[] = {
+		_T("LL DHW dmnd sw."), 0x01, 0x03, 0x02c0, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLDHWDemandSwitch, sizeof(LLDHWDemandSwitch)/sizeof(SOLAMULTIVALUE),\
 		_T("LL DHW stpt"), 0x01, 0x03, 0x02c1, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
 		_T("LL DHW pty. vs. CH"), 0x01, 0x03, 0x02c2, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLDHWPriorityVsCH, sizeof(LLDHWPriorityVsCH)/sizeof(SOLAMULTIVALUE),\
 		_T("Reserved"), 0x01, 0x03, 0x02c3, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
@@ -932,7 +939,8 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		_T("Frc lead rotn time"), 0x01, 0x03, 0x02de, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Minutes, NULL, 0,\
 		_T("LL DHW TOD stpt"), 0x01, 0x03, 0x02df, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
 		_T("Blr off optns"), 0x01, 0x03, 0x02e0, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, LLBoilerOffOptions, sizeof(LLBoilerOffOptions)/sizeof(SOLAMULTIVALUE),\
-		_T("All blrs off thrshld"), 0x01, 0x03, 0x02e1, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0};
+		_T("All blrs off thrshld"), 0x01, 0x03, 0x02e1, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Hysteresis, NULL, 0\
+	};
 #endif
 
 #if TCPPROTONODE
@@ -1648,22 +1656,24 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		0xffff, _T("Not configd")};
 
 #if !TCPPROTONODE
-	static CSolaMBMap::SOLAMBMAP FanConfig[] = {_T("Abs. max. fan spd."), 0x01, 0x03, 0x00100, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-		_T("Abs. min. fan spd."),  0x01, 0x03, 0x00101, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+	static CSolaMBMap::SOLAMBMAP FanConfig[] = {
+		_T("Abs. max. fan spd."), 0x01, 0x03, 0x0100, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Abs. min. fan spd."),  0x01, 0x03, 0x0101, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
 		_T("PWM frq."), 0x01, 0x03, 0x0102, 0x0001, 0, true, true, true, NULL, 0,  CSolaMBMap::Multivalue, FanPWMFreq, sizeof(FanPWMFreq)/sizeof(SOLAMULTIVALUE),\
-		_T("Pulses per rev."),  0x01, 0x03, 0x00103, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-		_T("Spd. up ramp"),  0x01, 0x03, 0x00104, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-		_T("Slow dn. ramp"),  0x01, 0x03, 0x00105, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-		_T("Gain up"),  0x01, 0x03, 0x00106, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-		_T("Gain dn."),  0x01, 0x03, 0x00107, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-		_T("Min. duty cycle"),  0x01, 0x03, 0x00108, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
-		_T("RESERVED"),  0x01, 0x03, 0x00109, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-		_T("RESERVED"),  0x01, 0x03, 0x0010a, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-		_T("RESERVED"),  0x01, 0x03, 0x0010b, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-		_T("RESERVED"),  0x01, 0x03, 0x0010c, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-		_T("RESERVED"),  0x01, 0x03, 0x0010d, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-		_T("RESERVED"),  0x01, 0x03, 0x0010e, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
-		_T("RESERVED"),  0x01, 0x03, 0x0010f, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0};
+		_T("Pulses per rev."),  0x01, 0x03, 0x0103, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Spd. up ramp"),  0x01, 0x03, 0x0104, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Slow dn. ramp"),  0x01, 0x03, 0x0105, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Gain up"),  0x01, 0x03, 0x0106, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Gain dn."),  0x01, 0x03, 0x0107, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("Min. duty cycle"),  0x01, 0x03, 0x0108, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
+		_T("RESERVED"),  0x01, 0x03, 0x0109, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("RESERVED"),  0x01, 0x03, 0x010a, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("RESERVED"),  0x01, 0x03, 0x010b, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("RESERVED"),  0x01, 0x03, 0x010c, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("RESERVED"),  0x01, 0x03, 0x010d, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("RESERVED"),  0x01, 0x03, 0x010e, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0,\
+		_T("RESERVED"),  0x01, 0x03, 0x010f, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Novalue, NULL, 0\
+	};
 #endif
 
 #if TCPPROTONODE
@@ -2753,76 +2763,78 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 
 	pcBCConfigPage = (CSolaPage*) new CSolaPage(BCConfigPage,sizeof(BCConfigPage)/sizeof(SOLAPAGE));
 
-	static SOLAPAGE LLConfigPage[] = {_T(""), 0, pcLLConfig,
-							_T(""), 1, pcLLConfig,
-							_T(""), 2, pcLLConfig,
-							_T(""), 3, pcLLConfig,
-							_T(""), 4, pcLLConfig,
-							_T(""), 5, pcLLConfig,
-							_T(""), 6, pcLLConfig,
-							_T(""), 7, pcLLConfig,
-							_T(""), 8, pcLLConfig,
-							_T(""), 9, pcLLConfig,
-							_T(""), 10, pcLLConfig,
-							_T(""), 11, pcLLConfig,
-							_T(""), 12, pcLLConfig,
-							_T(""), 13, pcLLConfig,
-							_T(""), 14, pcLLConfig,
-							_T(""), 15, pcLLConfig,
-							_T(""), 16, pcLLConfig,
-							_T(""), 17, pcLLConfig,
-							_T(""), 18, pcLLConfig,
-							_T(""), 19, pcLLConfig,
-							_T(""), 20, pcLLConfig,
-							_T(""), 21, pcLLConfig,
-							_T(""), 22, pcLLConfig,
-							_T(""), 23, pcLLConfig,
-							_T(""), 24, pcLLConfig,
-							_T(""), 25, pcLLConfig,
-							_T(""), 26, pcLLConfig,
-							_T(""), 27, pcLLConfig,
-							_T(""), 28, pcLLConfig,
-							_T(""), 29, pcLLConfig,
-							_T(""), 30, pcLLConfig,
-							_T(""), 31, pcLLConfig,
-							_T(""), 1, pcXSystemConfig,
-							_T(""), 2, pcXSystemConfig,
-							_T(""), 4, pcFrostProtConfig,
-							_T(""), 5, pcFrostProtConfig,
-							_T(""), 0, pcXLLConfig,
-							_T(""), 1, pcXLLConfig,
-							_T(""), 2, pcXLLConfig,
-							_T(""), 3, pcXLLConfig,
-							_T(""), 4, pcXLLConfig,
-							_T(""), 5, pcXLLConfig,
-							_T(""), 6, pcXLLConfig,
-							_T(""), 7, pcXLLConfig,
-							_T(""), 8, pcXLLConfig,
-							_T(""), 9, pcXLLConfig,
-							_T(""), 10, pcXLLConfig,
-							_T(""), 11, pcXLLConfig,
-							_T(""), 12, pcXLLConfig,
-							_T(""), 13, pcXLLConfig,
-							_T(""), 14, pcXLLConfig,
-							_T(""), 15, pcXLLConfig,
-							_T(""), 16, pcXLLConfig,
-							_T(""), 17, pcXLLConfig,
-							_T(""), 18, pcXLLConfig,
-							_T(""), 19, pcXLLConfig,
-							_T(""), 20, pcXLLConfig,
-							_T(""), 21, pcXLLConfig,
-							_T(""), 22, pcXLLConfig,
-							_T(""), 23, pcXLLConfig,
-							_T(""), 24, pcXLLConfig,
-							_T(""), 25, pcXLLConfig,
-							_T(""), 26, pcXLLConfig,
-							_T(""), 27, pcXLLConfig,
-							_T(""), 28, pcXLLConfig,
-							_T(""), 29, pcXLLConfig,
-							_T(""), 30, pcXLLConfig,
-							_T(""), 31, pcXLLConfig,
-							_T(""), 32, pcXLLConfig,
-							_T(""), 33, pcXLLConfig};
+	static SOLAPAGE LLConfigPage[] = {
+		_T(""), 0, pcLLConfig,
+		_T(""), 1, pcLLConfig,
+		_T(""), 2, pcLLConfig,
+		_T(""), 3, pcLLConfig,
+		_T(""), 4, pcLLConfig,
+		_T(""), 5, pcLLConfig,
+		_T(""), 6, pcLLConfig,
+		_T(""), 7, pcLLConfig,
+		_T(""), 8, pcLLConfig,
+		_T(""), 9, pcLLConfig,
+		_T(""), 10, pcLLConfig,
+		_T(""), 11, pcLLConfig,
+		_T(""), 12, pcLLConfig,
+		_T(""), 13, pcLLConfig,
+		_T(""), 14, pcLLConfig,
+		_T(""), 15, pcLLConfig,
+		_T(""), 16, pcLLConfig,
+		_T(""), 17, pcLLConfig,
+		_T(""), 18, pcLLConfig,
+		_T(""), 19, pcLLConfig,
+		_T(""), 20, pcLLConfig,
+		_T(""), 21, pcLLConfig,
+		_T(""), 22, pcLLConfig,
+		_T(""), 23, pcLLConfig,
+		_T(""), 24, pcLLConfig,
+		_T(""), 25, pcLLConfig,
+		_T(""), 26, pcLLConfig,
+		_T(""), 27, pcLLConfig,
+		_T(""), 28, pcLLConfig,
+		_T(""), 29, pcLLConfig,
+		_T(""), 30, pcLLConfig,
+		_T(""), 31, pcLLConfig,
+		_T(""), 1, pcXSystemConfig,
+		_T(""), 2, pcXSystemConfig,
+		_T(""), 4, pcFrostProtConfig,
+		_T(""), 5, pcFrostProtConfig,
+		_T(""), 0, pcXLLConfig,
+		_T(""), 1, pcXLLConfig,
+		_T(""), 2, pcXLLConfig,
+		_T(""), 3, pcXLLConfig,
+		_T(""), 4, pcXLLConfig,
+		_T(""), 5, pcXLLConfig,
+		_T(""), 6, pcXLLConfig,
+		_T(""), 7, pcXLLConfig,
+		_T(""), 8, pcXLLConfig,
+		_T(""), 9, pcXLLConfig,
+		_T(""), 10, pcXLLConfig,
+		_T(""), 11, pcXLLConfig,
+		_T(""), 12, pcXLLConfig,
+		_T(""), 13, pcXLLConfig,
+		_T(""), 14, pcXLLConfig,
+		_T(""), 15, pcXLLConfig,
+		_T(""), 16, pcXLLConfig,
+		_T(""), 17, pcXLLConfig,
+		_T(""), 18, pcXLLConfig,
+		_T(""), 19, pcXLLConfig,
+		_T(""), 20, pcXLLConfig,
+		_T(""), 21, pcXLLConfig,
+		_T(""), 22, pcXLLConfig,
+		_T(""), 23, pcXLLConfig,
+		_T(""), 24, pcXLLConfig,
+		_T(""), 25, pcXLLConfig,
+		_T(""), 26, pcXLLConfig,
+		_T(""), 27, pcXLLConfig,
+		_T(""), 28, pcXLLConfig,
+		_T(""), 29, pcXLLConfig,
+		_T(""), 30, pcXLLConfig,
+		_T(""), 31, pcXLLConfig,
+		_T(""), 32, pcXLLConfig,
+		_T(""), 33, pcXLLConfig
+	};
 
 	pcLLConfigPage = (CSolaPage*) new CSolaPage(LLConfigPage,sizeof(LLConfigPage)/sizeof(SOLAPAGE));
 
@@ -2865,6 +2877,7 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		_T(""),1,pcModConfiguration,
 		_T(""),2,pcModConfiguration,
 		_T(""),3,pcModConfiguration,
+		_T(""),6,pcModConfiguration,
 		_T(""),12,pcModConfiguration,
 		_T(""),13,pcModConfiguration,
 		_T(""),0,pcCHConfiguration,
@@ -2887,6 +2900,7 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		_T(""),25,pcPumpConfig,
 		_T(""),26,pcPumpConfig,
 		_T(""),27,pcPumpConfig,
+		_T(""),12,pcBurnerControlConfig,
 		_T(""),0,pcDHWConfiguration,
 		_T(""),1,pcDHWConfiguration,
 		_T(""),4,pcDHWConfiguration,
@@ -2919,6 +2933,8 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		_T(""),7,pcDHWStorageConfig,
 		_T(""),3,pcODResetConfig,
 		_T(""),4,pcODResetConfig,
+		_T(""),6,pcODResetConfig,
+		_T(""),7,pcODResetConfig,
 		_T(""),8,pcODResetConfig,
 		_T(""),9,pcODResetConfig,
 		_T(""),10,pcODResetConfig,
@@ -2929,8 +2945,31 @@ _T("Fan spd. err. resp."), 0x01, 0x03, 0x00ff, 0x0001, 0, false, true, false, NU
 		_T(""),7,pcFlapValveConfig,
 		_T(""),2,pcX2ModConfig,
 		_T(""),3,pcX2ModConfig,
+		_T(""),3,pcFanConfig,
+		_T(""),1,pcLLConfig,
+		_T(""),2,pcLLConfig,
+		_T(""),3,pcLLConfig,
+		_T(""),4,pcLLConfig,
+		_T(""),5,pcLLConfig,
+		_T(""),6,pcLLConfig,
+		_T(""),8,pcLLConfig,
+		_T(""),9,pcLLConfig,
+		_T(""),12,pcLLConfig,
+		_T(""),13,pcLLConfig,
+		_T(""),16,pcLLConfig,
+		_T(""),17,pcLLConfig,
+		_T(""),20,pcLLConfig,
+		_T(""),28,pcLLConfig,
+		_T(""),30,pcLLConfig,
+		_T(""),31,pcLLConfig,
 		_T(""),0,pcXLLConfig,
-		_T(""),1,pcXLLConfig
+		_T(""),1,pcXLLConfig,
+		_T(""),12,pcXLLConfig,
+		_T(""),14,pcXLLConfig,
+		_T(""),18,pcXLLConfig,
+		_T(""),29,pcXLLConfig,
+		_T(""),30,pcXLLConfig,
+		_T(""),31,pcXLLConfig
 	};
 
 	pcSaveRestorePage = (CSolaPage*) new CSolaPage(SaveRestorePage,sizeof(SaveRestorePage)/sizeof(SOLAPAGE));
