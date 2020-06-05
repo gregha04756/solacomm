@@ -81,11 +81,13 @@ LRESULT CALLBACK LLStatusDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPARAM
 		for ( i = 0; i < pcXLLStatus->GetSize(); i++ )
 		{
 			bResult = ::SetDlgItemText( hDlg, LBLIDBASE+(pcXLLStatus->GetStartRegAddr(i)), pcXLLStatus->GetParmName(i));
+#if defined (_DEBUG)
 			if ( !bResult )
 			{
 				hRes = ::StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%d"),pcXLLStatus->GetStartRegAddr(i));
 				k = ::MessageBox(hDlg,szTemp,szTitle,MB_OK);
 			}
+#endif
 		}
 
 		hRes = ::StringCchPrintf(szTemp, sizeof(szTemp)/sizeof(TCHAR), _T("%d %d"), pcLLStatus->GetSize(), pcXLLStatus->GetSize());
