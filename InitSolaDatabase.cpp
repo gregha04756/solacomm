@@ -1016,7 +1016,8 @@ _T("Annunc. mode"), 0x01, 0x03, 0x0131, 0x0001, 0, true, true, true, NULL, 0,  C
 															0x8000, _T("Rsrvd")};
 
 #if !TCPPROTONODE
-	static CSolaMBMap::SOLAMBMAP XSystemConfig[] = {_T("OD tmp src"), 0x01, 0x03, 0x0272, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, ODTemperatureSourceCodes, sizeof(ODTemperatureSourceCodes)/sizeof(SOLAMULTIVALUE),\
+	static CSolaMBMap::SOLAMBMAP XSystemConfig[] = {
+		_T("OD tmp src"), 0x01, 0x03, 0x0272, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, ODTemperatureSourceCodes, sizeof(ODTemperatureSourceCodes)/sizeof(SOLAMULTIVALUE),\
 		_T("WWSD enable"), 0x01, 0x03, 0x0273, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, WarmWXShutdownEnableCodes, sizeof(WarmWXShutdownEnableCodes)/sizeof(SOLAMULTIVALUE),\
 		_T("WWSD setpoint"), 0x01, 0x03, 0x0274, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::TemperatureSetpoint, NULL, 0,\
 		_T("ECOM rmt stat"), 0x01, 0x03, 0x0275, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
@@ -1043,14 +1044,16 @@ _T("Annunc. mode"), 0x01, 0x03, 0x0131, 0x0001, 0, true, true, true, NULL, 0,  C
 };
 
 #if !TCPPROTONODE
-	static CSolaMBMap::SOLAMBMAP FlapValveConfig[] = {_T("Ctrlr ntrctn nbl"), 0x01, 0x03, 0x0278, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, ControllerInteractionCodes, sizeof(ControllerInteractionCodes)/sizeof(SOLAMULTIVALUE),\
+	static CSolaMBMap::SOLAMBMAP FlapValveConfig[] = {
+		_T("Ctrlr ntrctn nbl"), 0x01, 0x03, 0x0278, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, ControllerInteractionCodes, sizeof(ControllerInteractionCodes)/sizeof(SOLAMULTIVALUE),\
 		_T("Blkd cndnst nbl"), 0x01, 0x03, 0x0279, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
 		_T("Flap vlv cntrlr ID"), 0x01, 0x03, 0x027a, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
 		_T("# flap vlv ctrlrs"), 0x01, 0x03, 0x027b, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
 		_T("Max frng rt at neighbr strt"), 0x01, 0x03, 0x027c, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Numericvalue, NULL, 0,\
 		_T("Stack fault frm neighbr nbl"), 0x01, 0x03, 0x027d, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
 		_T("Soft lockout nbl"), 0x01, 0x03, 0x027e, 0x0001, 0, false, true, false, NULL, 0, CSolaMBMap::Multivalue, EnableCodes, sizeof(EnableCodes)/sizeof(SOLAMULTIVALUE),\
-		_T("Brnr off inhbt time"), 0x01, 0x03, 0x027f, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0};
+		_T("Brnr off inhbt time"), 0x01, 0x03, 0x027f, 0x0001, 0, true, true, true, NULL, 0, CSolaMBMap::Timevalue, NULL, 0\
+	};
 #endif
 
 #if TCPPROTONODE
@@ -2666,23 +2669,26 @@ _T("Annunc. mode"), 0x01, 0x03, 0x0131, 0x0001, 0, true, true, true, NULL, 0,  C
 
 	pcDHWConfigPage = (CSolaPage*) new CSolaPage(DHWConfigPage,sizeof(DHWConfigPage)/sizeof(SOLAPAGE));
 
-	static SOLAPAGE ODResetConfigPage[] = {	_T(""), 0, pcODResetConfig,
-							_T(""), 1, pcODResetConfig,
-							_T(""), 2, pcODResetConfig,
-							_T(""), 3, pcODResetConfig,
-							_T(""), 4, pcODResetConfig,
-							_T(""), 5, pcODResetConfig,
-							_T(""), 6, pcODResetConfig,
-							_T(""), 7, pcODResetConfig,
-							_T(""), 8, pcODResetConfig,
-							_T(""), 9, pcODResetConfig,
-							_T(""), 10, pcODResetConfig,
-							_T(""), 11, pcODResetConfig,
-							_T(""), 12, pcODResetConfig,
-							_T(""), 13, pcODResetConfig,
-							_T(""), 14, pcODResetConfig,
-							_T(""), 15, pcODResetConfig,
-							_T(""), 7, pcConnectorConfig};
+	static SOLAPAGE ODResetConfigPage[] = {
+		_T(""), 0, pcODResetConfig,
+		_T(""), 1, pcODResetConfig,
+		_T(""), 2, pcODResetConfig,
+		_T(""), 3, pcODResetConfig,
+		_T(""), 4, pcODResetConfig,
+		_T(""), 5, pcODResetConfig,
+		_T(""), 6, pcODResetConfig,
+		_T(""), 7, pcODResetConfig,
+		_T(""), 8, pcODResetConfig,
+		_T(""), 9, pcODResetConfig,
+		_T(""), 10, pcODResetConfig,
+		_T(""), 11, pcODResetConfig,
+		_T(""), 12, pcODResetConfig,
+		_T(""), 13, pcODResetConfig,
+		_T(""), 14, pcODResetConfig,
+		_T(""), 15, pcODResetConfig,
+		_T(""), 7, pcConnectorConfig,
+		_T(""), 0, pcXSystemConfig
+	};
 
 	pcODResetConfigPage = (CSolaPage*) new CSolaPage(ODResetConfigPage,sizeof(ODResetConfigPage)/sizeof(SOLAPAGE));
 
@@ -2927,6 +2933,7 @@ _T("Annunc. mode"), 0x01, 0x03, 0x0131, 0x0001, 0, true, true, true, NULL, 0,  C
 		_T(""),5,pcX2CHConfig,
 		_T(""),6,pcX2CHConfig,
 		_T(""),7,pcX2CHConfig,
+		_T(""),0,pcXSystemConfig,
 		_T(""),1,pcXSystemConfig,
 		_T(""),2,pcXSystemConfig,
 		_T(""),6,pcDHWStorageConfig,
