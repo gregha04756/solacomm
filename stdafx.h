@@ -25,6 +25,7 @@
 #endif
 
 //#pragma comment (lib,"ws2_32.lib")
+#pragma comment (lib,"ws2_32.lib")
 #pragma comment (lib,"shell32.lib")
 #pragma comment (lib,"Report_Error_DLL.lib")
 #pragma comment (lib,"Sola_Auto_ID_DLL.lib")
