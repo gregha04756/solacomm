@@ -146,7 +146,7 @@ INT_PTR CALLBACK MBServerIPDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			lRes = ::SendMessage(hwndIPAddress,IPM_SETADDRESS,(WPARAM)0,(LPARAM)ulIPAddress);
 		}
 		hwnd_Host_Name_Edit = ::CreateWindowEx(WS_EX_CLIENTEDGE, WC_EDIT, NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP,
-			30, 50, 300, 20, hDlg, NULL, g_hInst, NULL);;
+			30, 50, 300, 25, hDlg, NULL, g_hInst, NULL);;
 		if (NULL != hwnd_Host_Name_Edit)
 		{
 			ui_res = SetWindowText(hwnd_Host_Name_Edit, sz_Host_Name);
