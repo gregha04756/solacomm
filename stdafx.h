@@ -35,7 +35,9 @@
 // Windows Header Files:
 #include <windows.h>
 #include <stdint.h>
+#if 0
 #include <typeinfo.h>
+#endif
 #include <commctrl.h>
 #include <commdlg.h>
 #include <winsock2.h>
