@@ -181,6 +181,11 @@ DWORD WINAPI CommThread(LPVOID lpParam)
 		nResult = ::MessageBox(hParentWnd,_T("RTU poll thread failed, aborting"),szTitle,MB_OK);
 		bResult = ::CloseHandle(hStartEvents[0]);
 		bResult = ::CloseHandle(hStartEvents[1]);
+		if (!(NULL == lpSolaID))
+		{
+			delete lpSolaID;
+			lpSolaID = NULL;
+		}
 		return 0;
 	}
 	if ( dwResult - WAIT_OBJECT_0 < sizeof(hStartEvents)/sizeof(HANDLE) )
@@ -189,6 +194,10 @@ DWORD WINAPI CommThread(LPVOID lpParam)
 		{
 			bResult = ::CloseHandle(hStartEvents[0]);
 			bResult = ::CloseHandle(hStartEvents[1]);
+			{
+				delete lpSolaID;
+				lpSolaID = NULL;
+			}
 			return 0;
 		}
 	}
@@ -374,6 +383,10 @@ DWORD WINAPI CommThread(LPVOID lpParam)
 //		::DebugBreak();
 		bSolaConnected = false;
 		bResult = ::PostMessage(hParentWnd,WM_APPSOLAPOLLABORT,(WPARAM)0,(LPARAM)0);
+	}
+	{
+		delete lpSolaID;
+		lpSolaID = NULL;
 	}
 
 	return 0;

@@ -133,6 +133,7 @@ DWORD Update_Sola_Dev_Coords_UI(HWND &hwnd_dlg,std::list<CSola_Auto_ID_DLL::SOLA
 DWORD Update_Modbus_Address_List(HWND &hwnd_dlg,std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS> *lp_sdcl,std::wstring *p_wstr_in);
 DWORD Activate_COM_Port_Selection(HWND &hwnd_dlg,HANDLE &h_COM);
 void Testing_Dlg_Callback(HWND hwnd_ow);
+extern "C++" BOOL OnExitCleanup(void);
 
 // Message handler for Summary page dialog.
 LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPARAM lParam)
@@ -322,6 +323,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				nRes = lp_cpp->i_COM_port - 1;
 				b_COM_parm = true;
 				delete lp_cpp;
+				lp_cpp = NULL;
 			}
 		}
 		nCommPort = 0;
@@ -553,8 +555,16 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 					bResult = ::CloseHandle(g_hPageUpdEvents[i]);
 					bResult = ::CloseHandle(g_lpPageDataEvents[i].hEvent);
 				}
-				delete[] g_hPageUpdEvents;
-				delete[] g_lpPageDataEvents;
+				if (!(NULL == g_hPageUpdEvents))
+				{
+					delete[] g_hPageUpdEvents;
+					g_hPageUpdEvents = NULL;
+				}
+				if (!(NULL == g_lpPageDataEvents))
+				{
+					delete[] g_lpPageDataEvents;
+					g_lpPageDataEvents = NULL;
+				}
 				::DeleteCriticalSection(&gCOMCritSect);
 				::DeleteCriticalSection(&gRWDataCritSect);
 				::DeleteCriticalSection(&gTimeCritSect);
@@ -565,6 +575,12 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			{
 				i ^= i;
 			}
+			if (!(NULL == lp_ipwsl))
+			{
+				delete lp_ipwsl;
+				lp_ipwsl = NULL;
+			}
+			bResult = OnExitCleanup();
 			return true;
 		case PSN_RESET:   //sent when Cancel button pressed
 			g_bQuit = true;
@@ -634,18 +650,32 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			{
 				bResult = ::CloseHandle(hCOM);
 			}
-			for ( i = 0; i < NUMPROPPAGES; i++ )
+			if (!(NULL == g_hPageUpdEvents))
 			{
-				bResult = ::CloseHandle(g_hPageUpdEvents[i]);
-				bResult = ::CloseHandle(g_lpPageDataEvents[i].hEvent);
+				for (i = 0; i < NUMPROPPAGES; i++)
+				{
+					bResult = ::CloseHandle(g_hPageUpdEvents[i]);
+					bResult = ::CloseHandle(g_lpPageDataEvents[i].hEvent);
+				}
+				delete[] g_hPageUpdEvents;
+				g_hPageUpdEvents = NULL;
 			}
-			delete[] g_hPageUpdEvents;
-			delete[] g_lpPageDataEvents;
+			if (!(NULL == g_lpPageDataEvents))
+			{
+				delete[] g_lpPageDataEvents;
+				g_lpPageDataEvents = NULL;
+			}
+
 			::DeleteCriticalSection(&gCOMCritSect);
 			::DeleteCriticalSection(&gRWDataCritSect);
 			::DeleteCriticalSection(&gTimeCritSect);
 			::DeleteCriticalSection(&gSaveFileCritSect);
 			::DeleteCriticalSection(&g_UpdCountCS);
+			if (!(NULL == lp_ipwsl))
+			{
+				delete lp_ipwsl;
+				lp_ipwsl = NULL;
+			}
 			break;
          
 		case PSN_SETACTIVE:
@@ -655,7 +685,6 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		default:
 			break;
 		}
-
 		return true;
 
 	case WM_APPTIMER:
@@ -1121,6 +1150,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			if (NULL != p_SDCL)
 			{
 				delete p_SDCL;
+				p_SDCL = NULL;
 			}
 			p_SDCL = reinterpret_cast<list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>*>(new list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>);
 			if (NULL != p_aidd->Get_SID()->Get_SDC_List())
@@ -1195,6 +1225,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			INT_PTR ipResult = ::DialogBoxParam(g_hInst,MAKEINTRESOURCE(IDD_MBSERVERIP),hDlg,MBServerIPDlg,(LPARAM)lpIPParms);
 			ulIPAddress = lpIPParms->ulIPAddress;
 			delete lpIPParms;
+			lpIPParms = NULL;
 			addrMBServer.S_un.S_addr = ::ntohl(ulIPAddress);
 			pchMBServer = ::inet_ntoa(addrMBServer);
 			for ( i = 0; pchMBServer[i] != '\0'; i++ )
