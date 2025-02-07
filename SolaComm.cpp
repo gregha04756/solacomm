@@ -43,6 +43,10 @@ std::list<CSolaMBMap*> *p_Reg_Group_List;
 extern "C++" HANDLE g_hReadQuitEvent;
 enum TCP_Gateway_Type g_TCP_gw_selection;
 
+#if defined (_DEBUG)
+long lBreakAlloc = 0;
+#endif
+
 // Forward declarations of functions included in this code module:
 void CALLBACK PropSheetCallback(HWND hwndPropSheet, UINT uMsg, LPARAM lParam);
 extern "C++" LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPARAM lParam);
@@ -112,6 +116,12 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
+#endif
+#if defined (_DEBUG)
+	if (lBreakAlloc > 0)
+	{
+		_CrtSetBreakAlloc(lBreakAlloc);
+	}
 #endif
 	bWarn = true;
 	pszCommandLine = NULL;
