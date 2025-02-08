@@ -117,6 +117,7 @@
     <ClCompile Include="NoticeDialog.cpp" />
     <ClCompile Include="ODResetCfgDlg.cpp" />
     <ClCompile Include="ODResetLineDlg.cpp" />
+    <ClCompile Include="OnExitCleanup.cpp" />
     <ClCompile Include="PollingDlg.cpp" />
     <ClCompile Include="PumpConfigDlg.cpp" />
     <ClCompile Include="SaveRestore.cpp" />

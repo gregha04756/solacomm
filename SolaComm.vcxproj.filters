@@ -141,6 +141,9 @@
     <ClCompile Include="Sola_RTU_Serial_Gateway.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OnExitCleanup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LockoutRecordDisplay.h">

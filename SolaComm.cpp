@@ -67,6 +67,7 @@ extern LRESULT CALLBACK SaveRestoreDlgProc(HWND hDlg,UINT uMessage,WPARAM wParam
 extern INT_PTR CALLBACK MBServerIPDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 extern "C++" BOOL InitSolaDatabase();
 extern "C++" DWORD ShowWarning(void);
+extern "C++" BOOL OnExitCleanup(void);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
@@ -508,6 +509,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	{
 		bResult = ::CloseHandle(g_hReSyncReqEvent);
 	}
+	bResult = OnExitCleanup();
+
 	return nResult;
 }
 
