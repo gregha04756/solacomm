@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SolaComm", "SolaComm.vcxproj", "{AEF8B719-8C38-4F19-A769-28E4EECB2627}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sola_Testing_DLL", "..\Sola
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Report_Error_DLL", "..\Report_Error_DLL\Report_Error_DLL\Report_Error_DLL.vcxproj", "{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmodbus-2.0.3_DLL", "..\libmodbus-2.0.3\libmodbus-2.0.3_DLL\libmodbus-2.0.3_DLL.vcxproj", "{961B51F3-2DC0-4DFE-8449-D70C1FD51104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,14 @@ Global
 		{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}.Release|Win32.Build.0 = Release|Win32
 		{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}.Release|x64.ActiveCfg = Release|x64
 		{C3C72E7C-0C34-4ED7-BB5B-A76E3CF30249}.Release|x64.Build.0 = Release|x64
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Debug|Win32.ActiveCfg = Debug|Win32
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Debug|Win32.Build.0 = Debug|Win32
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Debug|x64.ActiveCfg = Debug|Win32
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Debug|x64.Build.0 = Debug|Win32
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Release|Win32.ActiveCfg = Release|Win32
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Release|Win32.Build.0 = Release|Win32
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Release|x64.ActiveCfg = Release|Win32
+		{961B51F3-2DC0-4DFE-8449-D70C1FD51104}.Release|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
