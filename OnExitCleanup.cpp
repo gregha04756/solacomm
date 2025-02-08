@@ -127,21 +127,53 @@ BOOL OnExitCleanup(void)
 	}
 	if (!(NULL ==  pcSystemIDBurnerName))
 	{
+		for (iNdx = 0; iNdx < pcSystemIDBurnerName->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcSystemIDBurnerName->GetLPMap(iNdx)))
+			{
+				delete[] pcSystemIDBurnerName->GetLPMap(iNdx)->pchStr;
+				pcSystemIDBurnerName->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcSystemIDBurnerName;
 		pcSystemIDBurnerName = NULL;
 	}
 	if (!(NULL ==  pcSystemIDInstallationData))
 	{
+		for (iNdx = 0; iNdx < pcSystemIDInstallationData->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcSystemIDInstallationData->GetLPMap(iNdx)))
+			{
+				delete[] pcSystemIDInstallationData->GetLPMap(iNdx)->pchStr;
+				pcSystemIDInstallationData->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcSystemIDInstallationData;
 		pcSystemIDInstallationData = NULL;
 	}
 	if (!(NULL ==  pcSystemIDOEMID))
 	{
+		for (iNdx = 0; iNdx < pcSystemIDOEMID->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcSystemIDOEMID->GetLPMap(iNdx)))
+			{
+				delete[] pcSystemIDOEMID->GetLPMap(iNdx)->pchStr;
+				pcSystemIDOEMID->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcSystemIDOEMID;
 		pcSystemIDOEMID = NULL;
 	}
 	if (!(NULL ==  pcSystemIDOSNumber))
 	{
+		for (iNdx = 0; iNdx < pcSystemIDOSNumber->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcSystemIDOSNumber->GetLPMap(iNdx)))
+			{
+				delete[] pcSystemIDOSNumber->GetLPMap(iNdx)->pchStr;
+				pcSystemIDOSNumber->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcSystemIDOSNumber;
 		pcSystemIDOSNumber = NULL;
 	}
@@ -387,41 +419,105 @@ BOOL OnExitCleanup(void)
 	}
 	if (!(NULL == pcAnnuncConfig1))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig1->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig1->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig1->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig1->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig1;
 		pcAnnuncConfig1 = NULL;
 	}
 	if (!(NULL == pcAnnuncConfig2))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig2->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig2->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig2->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig2->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig2;
 		pcAnnuncConfig2 = NULL;
 	}
 	if (!(NULL == pcAnnuncConfig3))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig3->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig3->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig3->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig3->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig3;
 		pcAnnuncConfig3 = NULL;
 	}
 	if (!(NULL == pcAnnuncConfig4))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig4->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig4->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig4->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig4->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig4;
 		pcAnnuncConfig4 = NULL;
 	}
 	if (!(NULL == pcAnnuncConfig5))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig5->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig5->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig5->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig5->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig5;
 		pcAnnuncConfig5 = NULL;
 	}
 	if (!(NULL == pcAnnuncConfig6))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig6->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig6->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig6->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig6->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig6;
 		pcAnnuncConfig6 = NULL;
 	}
 	if (!(NULL == pcAnnuncConfig7))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig7->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig7->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig7->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig7->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig7;
 		pcAnnuncConfig7 = NULL;
 	}
 	if (!(NULL == pcAnnuncConfig8))
 	{
+		for (iNdx = 0; iNdx < pcAnnuncConfig8->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcAnnuncConfig8->GetLPMap(iNdx)))
+			{
+				delete[] pcAnnuncConfig8->GetLPMap(iNdx)->pchStr;
+				pcAnnuncConfig8->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcAnnuncConfig8;
 		pcAnnuncConfig8 = NULL;
 	}
@@ -457,11 +553,27 @@ BOOL OnExitCleanup(void)
 	}
 	if (!(NULL == pcILKAnnuncConfig))
 	{
+		for (iNdx = 0; iNdx < pcILKAnnuncConfig->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcILKAnnuncConfig->GetLPMap(iNdx)))
+			{
+				delete[] pcILKAnnuncConfig->GetLPMap(iNdx)->pchStr;
+				pcILKAnnuncConfig->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcILKAnnuncConfig;
 		pcILKAnnuncConfig = NULL;
 	}
 	if (!(NULL == pcLCIAnnuncConfig))
 	{
+		for (iNdx = 0; iNdx < pcLCIAnnuncConfig->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcLCIAnnuncConfig->GetLPMap(iNdx)))
+			{
+				delete[] pcLCIAnnuncConfig->GetLPMap(iNdx)->pchStr;
+				pcLCIAnnuncConfig->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcLCIAnnuncConfig;
 		pcLCIAnnuncConfig = NULL;
 	}
@@ -472,6 +584,14 @@ BOOL OnExitCleanup(void)
 	}
 	if (!(NULL == pcPIIAnnuncConfig))
 	{
+		for (iNdx = 0; iNdx < pcPIIAnnuncConfig->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcPIIAnnuncConfig->GetLPMap(iNdx)))
+			{
+				delete[] pcPIIAnnuncConfig->GetLPMap(iNdx)->pchStr;
+				pcPIIAnnuncConfig->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcPIIAnnuncConfig;
 		pcPIIAnnuncConfig = NULL;
 	}
