@@ -49,6 +49,8 @@ extern "C++" LPPAGEDATAEVENT g_lpPageDataEvents;
 HANDLE g_hReadQuitEvent;
 HANDLE g_hSummaryQuitEvent;
 HANDLE g_hStartRTUPollEvent;
+static Ctrash81_Modeless_Dlg_DLL::LPCONNTYPEPARMS g_lp_ctp;
+static std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>* g_p_SDCL;
 extern "C++" int g_nActivePages;
 extern "C++" int g_nActiveTrendPages;
 extern "C++" int g_nActiveStatusPages;
@@ -219,8 +221,6 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	std::wstring wstr_in;
 	static CSola_Auto_ID_DLL *p_sid;
 	static Ctrash81_Modeless_Dlg_DLL *p_aidd;
-	static std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS> *p_SDCL;
-	static Ctrash81_Modeless_Dlg_DLL::LPCONNTYPEPARMS lp_ctp;
 	static std::list<wstring> *lp_ipwsl;
 	std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>::iterator sdc_it;
 	static CSola_Testing_DLL* p_stdlg;
@@ -231,8 +231,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		g_h_Dlg = hDlg;
 		p_sid = NULL;
 		p_aidd = NULL;
-		p_SDCL = NULL;
-		lp_ctp = NULL;
+		g_p_SDCL = NULL;
+		g_lp_ctp = NULL;
 		try
 		{
 			lp_ipwsl = reinterpret_cast<list<wstring>*>(new list<wstring>);
@@ -1147,21 +1147,21 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	case WM_APPAIDSCANDONECALLBACK:
 		if (NULL != lParam)
 		{
-			if (NULL != p_SDCL)
+			if (NULL != g_p_SDCL)
 			{
-				delete p_SDCL;
-				p_SDCL = NULL;
+				delete g_p_SDCL;
+				g_p_SDCL = NULL;
 			}
-			p_SDCL = reinterpret_cast<list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>*>(new list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>);
+			g_p_SDCL = reinterpret_cast<list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>*>(new list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>);
 			if (NULL != p_aidd->Get_SID()->Get_SDC_List())
 			{
 				if (!(p_aidd->Get_SID()->Get_SDC_List()->empty()))
 				{
 					for (sdc_it = p_aidd->Get_SID()->Get_SDC_List()->begin();sdc_it != p_aidd->Get_SID()->Get_SDC_List()->end();sdc_it++)
 					{
-						p_SDCL->push_back(*sdc_it);
+						g_p_SDCL->push_back(*sdc_it);
 					}
-					dwResult = Update_Sola_Dev_Coords_UI(hDlg,p_SDCL);
+					dwResult = Update_Sola_Dev_Coords_UI(hDlg,g_p_SDCL);
 					if ((RTU_Serial_Direct == mbctMBConn) || (RTU_Serial_Gateway == mbctMBConn))
 					{
 						dwResult = Activate_COM_Port_Selection(hDlg,hCOM);
@@ -1267,7 +1267,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			lRes = SendMessage(GetDlgItem(hDlg,IDC_COMPORTCOMBO),CB_GETCURSEL,(WPARAM)0,(LPARAM)0);
 			lRes = SendMessage(GetDlgItem(hDlg,IDC_COMPORTCOMBO),CB_GETLBTEXT,(WPARAM)lRes,(LPARAM)sz_Comm_Port_Sel);
 			wstr_in.assign(sz_Comm_Port_Sel);
-			dwResult = Update_Modbus_Address_List(hDlg,p_SDCL,&wstr_in);
+			dwResult = Update_Modbus_Address_List(hDlg,g_p_SDCL,&wstr_in);
 			dwResult = Activate_COM_Port_Selection(hDlg,hCOM);
 			return (INT_PTR)TRUE;
 		}
@@ -1479,32 +1479,32 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				}
 				try
 				{
-					lp_ctp = reinterpret_cast<Ctrash81_Modeless_Dlg_DLL::LPCONNTYPEPARMS>(new Ctrash81_Modeless_Dlg_DLL::CONNTYPEPARMS);
+					g_lp_ctp = reinterpret_cast<Ctrash81_Modeless_Dlg_DLL::LPCONNTYPEPARMS>(new Ctrash81_Modeless_Dlg_DLL::CONNTYPEPARMS);
 				}
 				catch (std::bad_alloc &ba)
 				{
 					ReportError(ba.what());
 					return true;
 				}
-				if (NULL != lp_ctp)
+				if (NULL != g_lp_ctp)
 				{
 					if ((RTU_Serial_Direct == mbctMBConn) || (RTU_Serial_Gateway == mbctMBConn))
 					{
-						lp_ctp->ct = CSola_Auto_ID_DLL::conn_type::RTU;
-						lp_ctp->p_lipddn = NULL;
+						g_lp_ctp->ct = CSola_Auto_ID_DLL::conn_type::RTU;
+						g_lp_ctp->p_lipddn = NULL;
 					}
 					if (TCP == mbctMBConn)
 					{
-						lp_ctp->ct = CSola_Auto_ID_DLL::conn_type::TCP;
+						g_lp_ctp->ct = CSola_Auto_ID_DLL::conn_type::TCP;
 						p_v = SecureZeroMemory((PVOID)szIPAddress,sizeof(szIPAddress));
 						bResult = GetDlgItemText(hDlg,IDC_BTNIPADDRESS,szIPAddress,sizeof(szIPAddress)/sizeof(TCHAR));
 						lp_ipwsl->clear(); /* want list to only have one entry so clear all entries now (2014-09-26)*/
 						lp_ipwsl->push_back(wstring(szIPAddress));
-						lp_ctp->p_lipddn = lp_ipwsl;
+						g_lp_ctp->p_lipddn = lp_ipwsl;
 					}
 					p_aidd->Set_Callback(Dlg_End_Callback);
 					p_aidd->Set_Scan_Done_Handler(Scan_Done_Handler);
-					bResult = p_aidd->Run(lp_ctp);
+					bResult = p_aidd->Run(g_lp_ctp);
 				}
 			}
 			return true;
@@ -1704,12 +1704,23 @@ DWORD WINAPI SummaryThread(LPVOID lpParam)
 
 void Scan_Done_Handler(void *p_v)
 {
-	BOOL b_r;
+	BOOL b_r = TRUE;
 	b_r = PostMessage(g_h_Dlg,WM_APPAIDSCANDONECALLBACK,(WPARAM)0,(LPARAM)p_v);
 }
 
 void Dlg_End_Callback(void* p_v)
 {
+	if (!(NULL == g_lp_ctp))
+	{
+		delete g_lp_ctp;
+		g_lp_ctp = NULL;
+	}
+	if (!(NULL == g_p_SDCL))
+	{
+		delete g_p_SDCL;
+		g_p_SDCL = NULL;
+	}
+
 	PostMessage(g_h_Dlg,WM_APPDLGENDING,(WPARAM)0,(LPARAM)0);
 }
 
