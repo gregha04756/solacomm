@@ -147,6 +147,14 @@ BOOL OnExitCleanup(void)
 	}
 	if (!(NULL ==  pcSystemIDDateCode))
 	{
+		for (iNdx = 0; iNdx < pcSystemIDDateCode->GetSize(); iNdx++)
+		{
+			if (!(NULL == pcSystemIDDateCode->GetLPMap(iNdx)))
+			{
+				delete[] pcSystemIDDateCode->GetLPMap(iNdx)->pchStr;
+				pcSystemIDDateCode->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pcSystemIDDateCode;
 		pcSystemIDDateCode = NULL;
 	}
@@ -340,16 +348,40 @@ BOOL OnExitCleanup(void)
 
 	if (!(NULL == pc_Dup_Burner_Name))
 	{
+		for (iNdx = 0; iNdx < pc_Dup_Burner_Name->GetSize(); iNdx++)
+		{
+			if (!(NULL == pc_Dup_Burner_Name->GetLPMap(iNdx)))
+			{
+				delete[] pc_Dup_Burner_Name->GetLPMap(iNdx)->pchStr;
+				pc_Dup_Burner_Name->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pc_Dup_Burner_Name;
 		pc_Dup_Burner_Name = NULL;
 	}
 	if (!(NULL == pc_Dup_Installation_Data))
 	{
+		for (iNdx = 0; iNdx < pc_Dup_Installation_Data->GetSize(); iNdx++)
+		{
+			if (!(NULL == pc_Dup_Installation_Data->GetLPMap(iNdx)))
+			{
+				delete[] pc_Dup_Installation_Data->GetLPMap(iNdx)->pchStr;
+				pc_Dup_Installation_Data->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pc_Dup_Installation_Data;
 		pc_Dup_Installation_Data = NULL;
 	}
 	if (!(NULL == pc_Dup_OEMID))
 	{
+		for (iNdx = 0; iNdx < pc_Dup_OEMID->GetSize(); iNdx++)
+		{
+			if (!(NULL == pc_Dup_OEMID->GetLPMap(iNdx)))
+			{
+				delete[] pc_Dup_OEMID->GetLPMap(iNdx)->pchStr;
+				pc_Dup_OEMID->GetLPMap(iNdx)->pchStr = NULL;
+			}
+		}
 		delete pc_Dup_OEMID;
 		pc_Dup_OEMID = NULL;
 	}
@@ -588,7 +620,6 @@ BOOL OnExitCleanup(void)
 		delete pcSystemIDPage;
 		pcSystemIDPage = NULL;
 	}
-
 
 
 	return b_r;
