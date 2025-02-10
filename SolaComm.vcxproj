@@ -82,7 +82,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>D:\Visual Studio Projects\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL;D:\Visual Studio Projects\Sola_Testing_DLL\Sola_Testing_DLL;D:\Visual Studio Projects\Report_Error_DLL\Report_Error_DLL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Sola_Auto_ID_DLL\Sola_Auto_ID_DLL;$(SolutionDir)..\Sola_Testing_DLL\Sola_Testing_DLL;$(SolutionDir)..\Report_Error_DLL\Report_Error_DLL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>comctl32.lib;strsafe.lib;ws2_32.lib;Report_Error_DLL.lib;%(AdditionalDependencies)</AdditionalDependencies>
