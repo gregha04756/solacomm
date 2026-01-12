@@ -1409,6 +1409,11 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 									hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),pcSummaryPage->ItemLabel(i));
 									hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),_T(","));
 								}
+								for (i = 0; !g_bQuit && i < pcStatistics->GetSize(); i++)
+								{
+									hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), pcStatistics->GetParmName(i));
+									hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), _T(","));
+								}
 								::EnterCriticalSection(&gSaveFileCritSect);
 								if ( hSaveFile != NULL )
 								{
