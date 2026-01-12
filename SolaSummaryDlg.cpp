@@ -100,6 +100,7 @@ extern "C++" CSolaMultiValue* pcBurnerControlStatusValues;
 extern "C++" CSolaLockout* pcLockoutLog;
 extern "C++" CSolaAlert* pcAlertLog;
 extern "C++" CSolaPage* pcSummaryPage;
+extern "C++" CSolaPage* pcSystemIDPage;
 unsigned char chMBSndBuf[64];
 unsigned char chMBRcvBuf[64];
 std::queue<MBSNDRCVREQ> g_MBSndRcvReqQ;
@@ -152,6 +153,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	static HWND hSaveDataSecsSpin;
 	char chSaveBuf[2048];
 	int i;
+	int iNdx = 0;
 	int hh;
 	int mm;
 	int ss;
@@ -224,10 +226,12 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	static std::list<wstring> *lp_ipwsl;
 	std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>::iterator sdc_it;
 	static CSola_Testing_DLL* p_stdlg;
+	static int nStatisticsStart;
 
 	switch (uMessage)
 	{
 	case WM_INITDIALOG:
+		nStatisticsStart = pcSystemIDPage->GetSize() - pcStatistics->GetSize() - 1;
 		g_h_Dlg = hDlg;
 		p_sid = NULL;
 		p_aidd = NULL;
@@ -1074,6 +1078,13 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 					hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),_T(","));
 				}
 				::LeaveCriticalSection(&gSaveFileCritSect);
+			}
+/*			int nStatisticsStart = pcSystemIDPage->GetSize() - pcStatistics->GetSize() - 1; */
+			for (iNdx = 0; (hSaveFile != NULL) && (iNdx < pcStatistics->GetSize()); iNdx++)
+			{
+				unsigned long ulN = pcSystemIDPage->ItemMap(iNdx + nStatisticsStart)->GetU32Value(iNdx);
+				hRes = ::StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%lu,"), ulN);
+				hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), szTemp);
 			}
 			::EnterCriticalSection(&gSaveFileCritSect);
 			if ( hSaveFile != NULL && !(nSaveDataCntr > 0) )
