@@ -27,6 +27,7 @@ const TCHAR* szStatusChangeEvent = {_T("StatusChangeEvent")};
 const TCHAR* szConfigChangeEvent = {_T("ConfigChangeEvent")};
 const TCHAR* szTempUnit = {_T("FC")};
 const int i_MB_Limit = 254;
+const float flSaveDataSecsInc = (float)0.25;
 //HANDLE hCOMDup;
 CRITICAL_SECTION gCOMCritSect;
 CRITICAL_SECTION gRWDataCritSect;
@@ -160,8 +161,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	unsigned int uiResult;
 	static int nCommPort;
 	static int nPageIndex;
-	static int nSaveDataSecs;
-	static int nSaveDataCntr;
+	static float nSaveDataSecs;
+	static float nSaveDataCntr;
 	int nRes;
 	static TCHAR szCommPort[5];
 	TCHAR sz_Comm_Port_Sel[8];
@@ -227,10 +228,14 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	std::list<CSola_Auto_ID_DLL::SOLADEVICECOORDS>::iterator sdc_it;
 	static CSola_Testing_DLL* p_stdlg;
 	static int nStatisticsStart;
+	static BOOL bSaveDataSecsUpd;
+	RECT rectSaveDataSecsEdit;
+	RECT rectDialog;
 
 	switch (uMessage)
 	{
 	case WM_INITDIALOG:
+		bSaveDataSecsUpd = FALSE;
 		nStatisticsStart = pcSystemIDPage->GetSize() - pcStatistics->GetSize() - 1;
 		g_h_Dlg = hDlg;
 		p_sid = NULL;
@@ -247,7 +252,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			return true;
 		}
 		g_liPollTime.QuadPart = 0LL;
-		nSaveDataSecs = nSaveDataCntr = 1;
+		nSaveDataSecs = nSaveDataCntr = 1.0;
 		nHBCntr = nHeartBeat = 0;
 		bSuccess = true;
 		bStatus = false;
@@ -359,21 +364,25 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			lRes = SendMessage(GetDlgItem(hDlg,IDC_CBMBADDR),CB_SETCURSEL,(WPARAM)0,(LPARAM)0);
 		}
 
-		bResult = ::SetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, nSaveDataSecs, false);
+		/* bResult = ::SetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, nSaveDataSecs, false); */
+		hRes = StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%g"), nSaveDataSecs);
+		bResult = SetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
+		bResult = GetWindowRect(hDlg, &rectDialog);
+		bResult = GetWindowRect(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &rectSaveDataSecsEdit);
 		hSaveDataSecsSpin =  ::CreateWindowEx(	WS_EX_RIGHTSCROLLBAR,
 										UPDOWN_CLASS,
 										_T("SaveDataSecsSpin"),
-										WS_CHILD | WS_VISIBLE | UDS_ALIGNRIGHT | UDS_SETBUDDYINT,
-										220,
-										190,
-										10,
+										WS_CHILD | WS_VISIBLE | UDS_ALIGNRIGHT | UDS_WRAP,
+			360 ,
+			300,
+										12,
 										20,
 										hDlg,
 										NULL,
 										g_hInst,
 										NULL);
-		lRes = ::SendMessage(hSaveDataSecsSpin, UDM_SETBUDDY, (WPARAM) (HWND) ::GetDlgItem(hDlg,IDC_SAVEDATASECSEDIT), 0);
-		lRes = ::SendMessage(hSaveDataSecsSpin, UDM_SETRANGE32, 1, 3600);
+/*		lRes = ::SendMessage(hSaveDataSecsSpin, UDM_SETBUDDY, (WPARAM)(HWND) ::GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), 0); */
+		lRes = ::SendMessage(hSaveDataSecsSpin, UDM_SETRANGE32, 0, 3600);
 		for ( i = 0; i < pcSummaryPage->GetSize(); i++ )
 		{
 			bResult = ::SetDlgItemText(hDlg,
@@ -394,7 +403,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		nResult = ::WSAStartup(MAKEWORD(2,2),&wsWSAData);
 		if ( nResult != 0 )
 		{
-			p_v = ::SecureZeroMemory((PVOID)szErrMsg,(SIZE_T)sizeof(TCHAR)*sizeof(szErrMsg));
+			p_v = ::SecureZeroMemory((PVOID)szErrMsg,sizeof(szErrMsg));
 			switch (nResult)
 			{
 			case WSASYSNOTREADY:
@@ -684,6 +693,13 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
          
 		case PSN_SETACTIVE:
 			PropSheet_UnChanged(::GetParent(hDlg), hDlg);
+			break;
+
+		case NM_RELEASEDCAPTURE:
+			if (hSaveDataSecsSpin == lpnmhdr->hwndFrom)
+			{
+				int ii = 0;
+			}
 			break;
 
 		default:
@@ -1100,7 +1116,10 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 					::MessageBox(hDlg,_T("Error writing data to file"),szTitle,MB_OK);
 					bResult = ::CheckDlgButton(hDlg,IDC_CHKSAVEDATA,false);
 				}
-				nSaveDataCntr = nSaveDataSecs = ::GetDlgItemInt(hDlg,IDC_SAVEDATASECSEDIT,NULL,false);
+				GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
+				/*				nSaveDataCntr = nSaveDataSecs = ::GetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, NULL, false); */
+				nSaveDataCntr = nSaveDataSecs = (float)_wtof(szTemp);
+
 			}
 			::LeaveCriticalSection(&gSaveFileCritSect);
 			if ( usRegAcc != pcTrendStatus->GetValue((int)13) )
@@ -1527,7 +1546,16 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 		if ( LOWORD(wParam) == IDC_SAVEDATASECSEDIT && HIWORD(wParam) == EN_UPDATE )
 		{
-			nSaveDataCntr = nSaveDataSecs = ::GetDlgItemInt(hDlg,IDC_SAVEDATASECSEDIT,NULL,false);
+			bSaveDataSecsUpd = !bSaveDataSecsUpd;
+			/*nSaveDataCntr = nSaveDataSecs = ::GetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, NULL, false); */
+			p_v = SecureZeroMemory((PVOID)szTemp, (SIZE_T)sizeof(szTemp));
+			nRes = GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
+			if (!bSaveDataSecsUpd)
+			{
+				nSaveDataCntr = nSaveDataSecs = (float)_wtof(szTemp) + flSaveDataSecsInc;
+				hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%g"), nSaveDataSecs);
+				bResult = SetWindowText(::GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
+			}
 		}
 
 
