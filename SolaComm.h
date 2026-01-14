@@ -9,6 +9,8 @@ DWORD const SOLAREADSGTO = 12000L; /* Sola RTU gateway connect disconnected if n
 
 extern "C++" const int i_SB_nWidth_factor;
 extern "C++" const int i_SB_nMax_value;
+extern "C++" const DWORD g_dwTimerInterval;
+extern "C++" const DWORD g_dw1SecTimerInterval;
 
 #define MAX_LOADSTRING 100
 
@@ -66,6 +68,7 @@ extern "C++" const int i_SB_nMax_value;
 #define WM_APPQUITPOLLINGDLG	WM_APP + 139
 #define WM_APPSAVERESTOREUPD	WM_APP + 140
 #define WM_APPTESTINGDLGENDING	WM_APP + 142
+#define WM_APPTIMER1			WM_APP + 143
 
 enum PageType {
 	NoPage,
