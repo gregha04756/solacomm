@@ -256,7 +256,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			return true;
 		}
 		g_liPollTime.QuadPart = 0LL;
-		nSaveDataSecs = nSaveDataCntr = 1.0;
+		nSaveDataSecs = nSaveDataCntr = 0.5;
 		nHBCntr = nHeartBeat = 0;
 		bSuccess = true;
 		bStatus = false;
@@ -373,12 +373,14 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		bResult = SetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
 		bResult = GetWindowRect(hDlg, &rectDialog);
 		bResult = GetWindowRect(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &rectSaveDataSecsEdit);
+		nRes = rectSaveDataSecsEdit.right - rectDialog.left;
+		nRes = rectSaveDataSecsEdit.top - rectDialog.top;
 		hSaveDataSecsSpin =  ::CreateWindowEx(	WS_EX_RIGHTSCROLLBAR,
 										UPDOWN_CLASS,
 										_T("SaveDataSecsSpin"),
 										WS_CHILD | WS_VISIBLE | UDS_ALIGNRIGHT | UDS_WRAP,
-			380 ,
-			300,
+			rectSaveDataSecsEdit.right - rectDialog.left/*380*/ ,
+			rectSaveDataSecsEdit.top - rectDialog.top/*300*/,
 										12,
 										20,
 										hDlg,
@@ -727,14 +729,24 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				}
 				nSaveDataCntr = nSaveDataSecs;
 				hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%g"), nSaveDataSecs);
-				bResult = SetWindowText(::GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
+				bResult = SetDlgItemText(hDlg, IDC_SAVEDATASECSEDIT, szTemp);
 			}
 
 		}
 		return true;
 
 	case WM_APPTIMER:
-		nSaveDataCntr = (hSaveFile ? nSaveDataCntr - flSaveDataSecsInc : nSaveDataSecs);
+		if (!(NULL == hSaveFile))
+		{
+			if (((float)0.0 < nSaveDataCntr) && !(0.0 > (nSaveDataCntr - flSaveDataSecsInc)))
+			{
+				nSaveDataCntr -= flSaveDataSecsInc;
+			}
+			if (((float)0.0 < nSaveDataCntr) && (nSaveDataCntr < flSaveDataSecsInc))
+			{
+				nSaveDataCntr = (float)0.0;
+			}
+		}
 		return true;
 
 	case WM_APPTIMER1:
@@ -1132,7 +1144,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), szTemp);
 			}
 			::EnterCriticalSection(&gSaveFileCritSect);
-			if ( hSaveFile != NULL && !(nSaveDataCntr > 0) )
+			if ( hSaveFile != NULL && !(nSaveDataCntr > (float)0.0) )
 			{
 				hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),_T("\r\n"));
 				hRes = ::StringCchLength(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),&nLen);
