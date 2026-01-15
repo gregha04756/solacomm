@@ -27,9 +27,9 @@ const TCHAR* szStatusChangeEvent = {_T("StatusChangeEvent")};
 const TCHAR* szConfigChangeEvent = {_T("ConfigChangeEvent")};
 const TCHAR* szTempUnit = {_T("FC")};
 const int i_MB_Limit = 254;
-const float flSaveDataSecsInc = (float)0.25;
-const float flSaveDataSecsMax = (float)3600.0;
-const float flSaveDataSecsMin = (float)0.25;
+const UINT uiSaveDataSecsInc = 250;
+const UINT uiSaveDataSecsMax = 10000;
+const UINT uiSaveDataSecsMin = 250;
 const DWORD g_dwTimerInterval = 250;
 const DWORD g_dw1SecTimerInterval = 1000;
 //HANDLE hCOMDup;
@@ -165,8 +165,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	unsigned int uiResult;
 	static int nCommPort;
 	static int nPageIndex;
-	static float nSaveDataSecs;
-	static float nSaveDataCntr;
+	static UINT uiSaveDataSecs;
+	static UINT uiSaveDataCntr;
 	int nRes;
 	static TCHAR szCommPort[5];
 	TCHAR sz_Comm_Port_Sel[8];
@@ -256,7 +256,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			return true;
 		}
 		g_liPollTime.QuadPart = 0LL;
-		nSaveDataSecs = nSaveDataCntr = 0.5;
+		uiSaveDataSecs = 250;
+		uiSaveDataCntr = 250;
 		nHBCntr = nHeartBeat = 0;
 		bSuccess = true;
 		bStatus = false;
@@ -369,7 +370,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 
 		/* bResult = ::SetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, nSaveDataSecs, false); */
-		hRes = StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%g"), nSaveDataSecs);
+		hRes = StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%d"), uiSaveDataSecs);
 		bResult = SetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
 		bResult = GetWindowRect(hDlg, &rectDialog);
 		bResult = GetWindowRect(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &rectSaveDataSecsEdit);
@@ -388,7 +389,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 										g_hInst,
 										NULL);
 /*		lRes = ::SendMessage(hSaveDataSecsSpin, UDM_SETBUDDY, (WPARAM)(HWND) ::GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), 0); */
-		lRes = ::SendMessage(hSaveDataSecsSpin, UDM_SETRANGE32, 0, (int)flSaveDataSecsMax);
+		lRes = ::SendMessage(hSaveDataSecsSpin, UDM_SETRANGE32, uiSaveDataSecsMin, uiSaveDataSecsMax);
 		for ( i = 0; i < pcSummaryPage->GetSize(); i++ )
 		{
 			bResult = ::SetDlgItemText(hDlg,
@@ -713,23 +714,31 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 		if (lpnmhdr->hwndFrom == hSaveDataSecsSpin)
 		{
-			float tFloat;
+			UINT uiUINT;
 			UINT uiCode = lpnmhdr->code;
 			LPNMHDR lpnmh = (LPNMHDR)lParam;
 			if (lpnmh->code == UDN_DELTAPOS)
 			{
+				UINT uiOldSaveDataSecs = uiSaveDataSecs;
 				LPNMUPDOWN lpnmud = (LPNMUPDOWN)lParam;
 				// Use the data in lpnmud
 				p_v = SecureZeroMemory((PVOID)szTemp, (SIZE_T)sizeof(szTemp));
 				nRes = GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
-				tFloat = _wtof(szTemp);
-				if (!(flSaveDataSecsMin > (nSaveDataSecs- flSaveDataSecsInc)) && !((nSaveDataSecs+flSaveDataSecsInc) > flSaveDataSecsMax))
+				uiUINT = _wtoi(szTemp);
+				if ((int)0 > lpnmud->iDelta && ((uiSaveDataSecs - uiSaveDataSecsInc) >= uiSaveDataSecsMin))
 				{
-					nSaveDataSecs +=  ((float)(lpnmud->iDelta) * flSaveDataSecsInc);
+					uiSaveDataSecs -= uiSaveDataSecsInc;
 				}
-				nSaveDataCntr = nSaveDataSecs;
-				hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%g"), nSaveDataSecs);
-				bResult = SetDlgItemText(hDlg, IDC_SAVEDATASECSEDIT, szTemp);
+				if ((int)0 < lpnmud->iDelta && ((uiSaveDataSecs + uiSaveDataSecsInc) <= uiSaveDataSecsMax))
+				{
+					uiSaveDataSecs += uiSaveDataSecsInc;
+				}
+				uiSaveDataCntr = uiSaveDataSecs;
+				if (!(uiOldSaveDataSecs == uiSaveDataSecs))
+				{
+					hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%d"), uiSaveDataSecs);
+					bResult = SetDlgItemText(hDlg, IDC_SAVEDATASECSEDIT, szTemp);
+				}
 			}
 
 		}
@@ -738,13 +747,13 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	case WM_APPTIMER:
 		if (!(NULL == hSaveFile))
 		{
-			if (((float)0.0 < nSaveDataCntr) && !(0.0 > (nSaveDataCntr - flSaveDataSecsInc)))
+			if ((0 < uiSaveDataCntr) && !(0.0 > (uiSaveDataCntr - uiSaveDataSecsInc)))
 			{
-				nSaveDataCntr -= flSaveDataSecsInc;
+				uiSaveDataCntr -= uiSaveDataSecsInc;
 			}
-			if (((float)0.0 < nSaveDataCntr) && (nSaveDataCntr < flSaveDataSecsInc))
+			if (((float)0.0 < uiSaveDataCntr) && (uiSaveDataCntr < uiSaveDataSecsInc))
 			{
-				nSaveDataCntr = (float)0.0;
+				uiSaveDataCntr = 0;
 			}
 		}
 		return true;
@@ -1144,7 +1153,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), szTemp);
 			}
 			::EnterCriticalSection(&gSaveFileCritSect);
-			if ( hSaveFile != NULL && !(nSaveDataCntr > (float)0.0) )
+			if ( hSaveFile != NULL && !(uiSaveDataCntr > 0) )
 			{
 				hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),_T("\r\n"));
 				hRes = ::StringCchLength(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),&nLen);
@@ -1159,7 +1168,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				}
 				GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
 				/*				nSaveDataCntr = nSaveDataSecs = ::GetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, NULL, false); */
-				nSaveDataCntr = nSaveDataSecs = (float)_wtof(szTemp);
+				uiSaveDataSecs = _wtoi(szTemp);
+				uiSaveDataCntr = uiSaveDataSecs;
 
 			}
 			::LeaveCriticalSection(&gSaveFileCritSect);
@@ -1587,22 +1597,22 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 		if ( LOWORD(wParam) == IDC_SAVEDATASECSEDIT && HIWORD(wParam) == EN_UPDATE )
 		{
-			float flOldSaveDataSecs = nSaveDataSecs;
+			UINT uiOldSaveDataSecs = uiSaveDataSecs;
 			bSaveDataSecsUpd = !bSaveDataSecsUpd;
 			p_v = SecureZeroMemory((PVOID)szTemp, (SIZE_T)sizeof(szTemp));
 			nRes = GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
 			if (!bSaveDataSecsUpd)
 			{
-				if (!(_wtof(szTemp) < flSaveDataSecsMin) && (flSaveDataSecsMax > _wtof(szTemp)))
+				if (!(_wtoi(szTemp) < uiSaveDataSecsMin) && (uiSaveDataSecsMax > _wtoi(szTemp)))
 				{
-					nSaveDataSecs = _wtof(szTemp);
-					hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%g"), nSaveDataSecs);
+					uiSaveDataSecs = _wtoi(szTemp);
+					hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%d"), uiSaveDataSecs);
 					bResult = SetWindowText(::GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
 				}
-				if (!(flSaveDataSecsMin < _wtof(szTemp)) || (_wtof(szTemp) > flSaveDataSecsMax))
+				if (!(uiSaveDataSecsMin < _wtoi(szTemp)) || (_wtoi(szTemp) > uiSaveDataSecsMax))
 				{
-					nSaveDataSecs = flOldSaveDataSecs;
-					hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%g"), nSaveDataSecs);
+					uiSaveDataSecs = uiOldSaveDataSecs;
+					hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%d"), uiSaveDataSecs);
 					bResult = SetWindowText(::GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
 				}
 			}
