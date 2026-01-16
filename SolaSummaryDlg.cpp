@@ -175,6 +175,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	TCHAR szErrMsg[260];
 	static BOOL bSuccess;
 	static BOOL bStatus;
+	static volatile BOOL bNewData;
 	static DWORD dwBytesRead;
 	static DWORD dwBytesWritten;
 	static HANDLE hTimerThread;
@@ -201,7 +202,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	LRESULT lRes;
 	static int nHeartBeat;
 	TCHAR szTemp[MAX_LOADSTRING];
-	TCHAR szSaveBuf[1024];
+	static TCHAR szSaveBuf[1024];
 	SYSTEMTIME LocalTime;
 	LRESULT lResult;
 	static unsigned short usRegAcc;
@@ -239,6 +240,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	switch (uMessage)
 	{
 	case WM_INITDIALOG:
+		bNewData = FALSE;
 		bSaveDataSecsUpd = FALSE;
 		nStatisticsStart = pcSystemIDPage->GetSize() - pcStatistics->GetSize() - 1;
 		g_h_Dlg = hDlg;
@@ -256,8 +258,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			return true;
 		}
 		g_liPollTime.QuadPart = 0LL;
-		uiSaveDataSecs = 250;
-		uiSaveDataCntr = 250;
+		uiSaveDataSecs = 1000 / g_dwTimerInterval; /* Base timer interval g_dwTimerInterval is 250mS, so set the initial save interval 4 x 250ms i.e. 1s */
+		uiSaveDataCntr = uiSaveDataSecs;
 		nHBCntr = nHeartBeat = 0;
 		bSuccess = true;
 		bStatus = false;
@@ -370,7 +372,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 
 		/* bResult = ::SetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, nSaveDataSecs, false); */
-		hRes = StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%d"), uiSaveDataSecsMin / uiSaveDataSecsInc);
+		hRes = StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%d"), uiSaveDataSecs);
 		bResult = SetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), szTemp);
 		bResult = GetWindowRect(hDlg, &rectDialog);
 		bResult = GetWindowRect(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &rectSaveDataSecsEdit);
@@ -743,18 +745,33 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 
 		return true;
 
-	case WM_APPTIMER:
-		if (!(NULL == hSaveFile))
+	case WM_APPDATASAVETIMER:
+		::EnterCriticalSection(&gSaveFileCritSect);
+		if (bNewData && (hSaveFile != NULL) && (--uiSaveDataCntr == 0))
 		{
-			if ((0 < uiSaveDataCntr) && !(0 > (uiSaveDataCntr - uiSaveDataSecsInc)))
+			hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), _T("\r\n"));
+			hRes = ::StringCchLength(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), &nLen);
+			nRes = ::WideCharToMultiByte(CP_ACP, 0, szSaveBuf, nLen, chSaveBuf, sizeof(chSaveBuf), NULL, NULL);
+			bResult = ::WriteFile(hSaveFile, (LPCVOID)chSaveBuf, (DWORD)(nLen * sizeof(char)), &dwBytesWritten, NULL);
+			if (!bResult)
 			{
-				uiSaveDataCntr -= uiSaveDataSecsInc;
+				bResult = ::CloseHandle(hSaveFile);
+				hSaveFile = NULL;
+				::MessageBox(hDlg, _T("Error writing data to file"), szTitle, MB_OK);
+				bResult = ::CheckDlgButton(hDlg, IDC_CHKSAVEDATA, false);
 			}
-			if ((0 < uiSaveDataCntr) && (uiSaveDataCntr < uiSaveDataSecsInc))
-			{
-				uiSaveDataCntr = 0;
-			}
+			GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
+			/*				nSaveDataCntr = nSaveDataSecs = ::GetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, NULL, false); */
+			uiSaveDataSecs = _wtoi(szTemp);
+			uiSaveDataCntr = uiSaveDataSecs;
+			bNewData = FALSE;
 		}
+		::LeaveCriticalSection(&gSaveFileCritSect);
+
+
+
+
+
 		return true;
 
 	case WM_APPTIMER1:
@@ -848,7 +865,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 		return true;
 	case WM_APPTRENDUPD:
-			i = MultiByteToWideChar(CP_ACP,
+		p_v = SecureZeroMemory((PVOID)szSaveBuf, sizeof(szSaveBuf));
+		i = MultiByteToWideChar(CP_ACP,
 									MB_PRECOMPOSED,
 									g_SolaID.BurnerName,
 									-1,
@@ -1134,44 +1152,16 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				default:
 					break;
 				}
-				::EnterCriticalSection(&gSaveFileCritSect);
-				if ( hSaveFile != NULL )
-				{
-/*					hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),pcSummaryPage->ItemLabel(i));
-					hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),_T("=")); */
-					hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),szTemp);
-					hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),_T(","));
-				}
-				::LeaveCriticalSection(&gSaveFileCritSect);
+				hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), szTemp);
+				hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), _T(","));
 			}
-/*			int nStatisticsStart = pcSystemIDPage->GetSize() - pcStatistics->GetSize() - 1; */
 			for (iNdx = 0; (hSaveFile != NULL) && (iNdx < pcStatistics->GetSize()); iNdx++)
 			{
 				unsigned long ulN = pcSystemIDPage->ItemMap(iNdx + nStatisticsStart)->GetU32Value(iNdx);
 				hRes = ::StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%lu,"), ulN);
 				hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), szTemp);
 			}
-			::EnterCriticalSection(&gSaveFileCritSect);
-			if ( hSaveFile != NULL && !(uiSaveDataCntr > 0) )
-			{
-				hRes = ::StringCchCat(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),_T("\r\n"));
-				hRes = ::StringCchLength(szSaveBuf,sizeof(szSaveBuf)/sizeof(TCHAR),&nLen);
-				nRes = ::WideCharToMultiByte(CP_ACP,0,szSaveBuf,nLen,chSaveBuf,sizeof(chSaveBuf),NULL,NULL);
-				bResult = ::WriteFile(hSaveFile,(LPCVOID)chSaveBuf,(DWORD)(nLen*sizeof(char)),&dwBytesWritten,NULL);
-				if ( !bResult )
-				{
-					bResult = ::CloseHandle(hSaveFile);
-					hSaveFile = NULL;
-					::MessageBox(hDlg,_T("Error writing data to file"),szTitle,MB_OK);
-					bResult = ::CheckDlgButton(hDlg,IDC_CHKSAVEDATA,false);
-				}
-				GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
-				/*				nSaveDataCntr = nSaveDataSecs = ::GetDlgItemInt(hDlg, IDC_SAVEDATASECSEDIT, NULL, false); */
-				uiSaveDataSecs = _wtoi(szTemp);
-				uiSaveDataCntr = uiSaveDataSecs;
-
-			}
-			::LeaveCriticalSection(&gSaveFileCritSect);
+			bNewData = TRUE;
 			if ( usRegAcc != pcTrendStatus->GetValue((int)13) )
 			{
 				usRegAcc = pcTrendStatus->GetValue((int)13);
@@ -1599,8 +1589,8 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			bSaveDataSecsUpd = !bSaveDataSecsUpd;
 			p_v = SecureZeroMemory((PVOID)szTemp, (SIZE_T)sizeof(szTemp));
 			nRes = GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
-			uiSaveDataSecs = _wtoi(szTemp) * uiSaveDataSecsInc;
-			hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("250 millisecond intervals (%gs)"), (float)uiSaveDataSecs/1000.0);
+			uiSaveDataSecs = _wtoi(szTemp);
+			hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("250 millisecond intervals (%gs)"), ((float)uiSaveDataSecs)*0.25);
 			bResult = SetDlgItemText(hDlg, IDC_SAVEDATASECINTER, szTemp);
 		}
 

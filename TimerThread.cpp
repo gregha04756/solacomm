@@ -31,7 +31,7 @@ DWORD WINAPI TimerThread(LPVOID lpParam)
 
 	while ( (dwWaitResult = ::WaitForSingleObject(hEventHandle, g_dwTimerInterval)) == WAIT_TIMEOUT )
 	{
-		b_r = ::PostMessage(hParentWnd, WM_APPTIMER, 0, (LPARAM)szTimeString);
+		b_r = ::PostMessage(hParentWnd, WM_APPDATASAVETIMER, 0, (LPARAM)szTimeString);
 		if (0 == dw1SecCounter)
 		{
 			::GetLocalTime(&timestruct);

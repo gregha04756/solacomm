@@ -26,7 +26,7 @@ extern "C++" const DWORD g_dw1SecTimerInterval;
 #define CELSIUSUNITS 1
 #define FAHRENHEITUNITS 0
 
-#define WM_APPTIMER				WM_APP + 100
+#define WM_APPDATASAVETIMER		WM_APP + 100
 #define WM_APPTIMER5			WM_APP + 101
 #define WM_APPTRENDUPD			WM_APP + 102
 #define WM_APPRWHWNDUPDATE		WM_APP + 103
