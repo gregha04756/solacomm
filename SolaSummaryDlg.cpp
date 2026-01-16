@@ -712,7 +712,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		default:
 			break;
 		}
-
+#if 0
 		if (lpnmhdr->hwndFrom == hSaveDataSecsSpin)
 		{
 			UINT uiUINT;
@@ -739,6 +739,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			}
 
 		}
+#endif
 
 		return true;
 
@@ -1599,7 +1600,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			p_v = SecureZeroMemory((PVOID)szTemp, (SIZE_T)sizeof(szTemp));
 			nRes = GetWindowText(GetDlgItem(hDlg, IDC_SAVEDATASECSEDIT), &szTemp[0], sizeof(szTemp) / sizeof(TCHAR));
 			uiSaveDataSecs = _wtoi(szTemp) * uiSaveDataSecsInc;
-			hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("250 millisecond intervals (%g)"), (float)uiSaveDataSecs/1000.0);
+			hRes = StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("250 millisecond intervals (%gs)"), (float)uiSaveDataSecs/1000.0);
 			bResult = SetDlgItemText(hDlg, IDC_SAVEDATASECINTER, szTemp);
 		}
 
