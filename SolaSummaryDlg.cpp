@@ -866,7 +866,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		return true;
 	case WM_APPTRENDUPD:
 		p_v = SecureZeroMemory((PVOID)szSaveBuf, sizeof(szSaveBuf));
-		i = MultiByteToWideChar(CP_ACP,
+		nRes = MultiByteToWideChar(CP_ACP,
 									MB_PRECOMPOSED,
 									g_SolaID.BurnerName,
 									-1,
@@ -875,8 +875,17 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			::GetLocalTime(&LocalTime);
 			hRes = ::StringCchPrintf(szSaveBuf, sizeof(szSaveBuf)/sizeof(TCHAR),_T("%d-%02d-%02d_%02d:%02d:%02d.%03d,"), LocalTime.wYear, LocalTime.wMonth, LocalTime.wDay, LocalTime.wHour, LocalTime.wMinute, LocalTime.wSecond,LocalTime.wMilliseconds);
 			p_v = ::SecureZeroMemory((PVOID)szTemp,sizeof(szTemp));
+#if _DEBUG
+			nRes = pcSummaryPage->GetSize();
+#endif
 			for ( i = 0; !g_bQuit && i < pcSummaryPage->GetSize(); i++ )
 			{
+#if _DEBUG
+				if (i >= 35 && i <= 42)
+				{
+					i = i;
+				}
+#endif
 				switch (pcSummaryPage->ItemMap(i)->GetType(pcSummaryPage->ItemIndex(i)))
 				{
 				case CSolaMBMap::Temperature:
@@ -1034,6 +1043,9 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 					if ( pcSummaryPage->ItemMap(i)->GetLPMulti(pcSummaryPage->ItemIndex(i)) != NULL )
 					{
 						_ASSERT(pcSummaryPage->ItemMap(i)->GetLPMulti(pcSummaryPage->ItemIndex(i)) != NULL);
+#if _DEBUG
+						nRes = pcSummaryPage->ItemMap(i)->GetMultiItemValue(pcSummaryPage->ItemIndex(i), pcSummaryPage->ItemMap(i)->GetValue(pcSummaryPage->ItemIndex(i)));
+#endif
 						if ( pcSummaryPage->ItemMap(i)->GetMultiItemValue(pcSummaryPage->ItemIndex(i),pcSummaryPage->ItemMap(i)->GetValue(pcSummaryPage->ItemIndex(i))) != 1 )
 						{
 							int usA = pcSummaryPage->ItemMap(i)->GetStartRegAddr(pcSummaryPage->ItemIndex(i));
@@ -1057,10 +1069,6 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 						LPSOLAMULTIVALUE lpM = pcSummaryPage->ItemMap(i)->GetLPMulti(pcSummaryPage->ItemIndex(i));
 						int nS = pcSummaryPage->ItemMap(i)->GetMultiListSize(pcSummaryPage->ItemIndex(i));
 						TCHAR* szS = pcSummaryPage->ItemMap(i)->GetMultiValueItem(pcSummaryPage->ItemIndex(i),pcSummaryPage->ItemMap(i)->GetValue(pcSummaryPage->ItemIndex(i)));
-					if (i == 8)
-					{
-						i = i;
-					}
 						if ( szS )
 						{
 							lResult = ::SetDlgItemText(hDlg,
@@ -1107,7 +1115,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 							nResult,
 							szS);
 						lResult = ::SetDlgItemText(hDlg, TXTIDBASE+(pcSummaryPage->ItemMap(i)->GetStartRegAddr(pcSummaryPage->ItemIndex(i))), szTemp);
-						hRes = ::StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%s"),szS);
+						/*hRes = ::StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%s"), szS);*/
 					}
 					break;
 				case CSolaMBMap::Holdcode:
@@ -1129,10 +1137,10 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 							_T("HOLD %d: %s"),nResult,
 							szS);
 						lResult = ::SetDlgItemText(hDlg,TXTIDBASE+(pcSummaryPage->ItemMap(i)->GetStartRegAddr(pcSummaryPage->ItemIndex(i))),szTemp);
-						hRes = ::StringCchPrintf(szTemp,
+						/*hRes = ::StringCchPrintf(szTemp,
 							sizeof(szTemp)/sizeof(TCHAR),
 							_T("%s"),
-							szS);
+							szS);*/
 					}
 					break;
 				case CSolaMBMap::Seconds:

@@ -2493,52 +2493,50 @@ _T("Annunc. mode"), 0x01, 0x03, 0x0131, 0x0001, 0, true, true, true, NULL, 0,  C
 	pcAlertLog = new CSolaAlert(AlertLog, sizeof(AlertLog)/sizeof(SOLAALERT));
 #endif
 
-	static SOLAPAGE SummaryPage[] = {	_T(""), 2, pcBurnerControlStatus,
-							_T(""), 8, pcBurnerControlStatus,
-							_T("Demand"), 0, pcTrendStatus,
-							_T("Burner state"), 1, pcBurnerControlStatus,
-							_T("Brnr seq."), 6, pcBurnerControlStatus,
-							_T("Brnr dly."), 7, pcBurnerControlStatus,
-							_T("DHW pri. remain"), 3, pcDHWStatus,
-							_T("CH pump"), 3, pcPumpStatus,
-							_T("DHW pump"), 7, pcPumpStatus,
-							_T("System pump"), 12, pcPumpStatus,
-							_T("Boiler pump"), 15, pcPumpStatus,
-							_T("LL setpoint"), 12, pcTrendStatus,
-							_T("Inlet"), 5, pcTrendStatus,
-							_T("Outlet"), 1, pcTrendStatus,
-							_T("System"), 4, pcExtendedSensorStatus,
-							_T("Stack"), 8, pcTrendStatus,
-							_T("4-20mA"), 9, pcTrendStatus,
-//							_T("Outdoor"), 7, pcTrendStatus,
-							_T("Outdoor"), 0, pcExtendedSensorStatus,
-//							_T("Outdoor"), 49, pcXLLStatus,
-							_T("Firing rate"), 2, pcTrendStatus,
-							_T("Fan speed"), 3, pcTrendStatus,
-							_T("Flame signal"), 4, pcTrendStatus,
-							_T("DHW"), 6, pcTrendStatus,
-							_T("CH setpoint"), 10, pcTrendStatus,
-							_T("DHW setpoint"), 11, pcTrendStatus,
-							_T("Active rate limiter"), 0, pcDemandModulationStatus,
-							_T("Limited rate"), 1, pcDemandModulationStatus,
-							_T("Active rate ovrd"), 2, pcDemandModulationStatus,
-							_T("Override rate"), 3, pcDemandModulationStatus,
-							_T("Demand rate"), 4, pcDemandModulationStatus,
-							_T("CH on hyst."), 7, pcCHStatus,
-							_T("CH off hyst."), 8, pcCHStatus,
-							_T("DHW on hyst."), 9, pcDHWStatus,
-							_T("DHW off hyst."), 10, pcDHWStatus,
-							_T("LL on hyst."), 5, pcLLConfig,
-							_T("LL off hyst."), 6, pcLLConfig,
-							_T("Outlet sensor state"), 5, pcSensorStatus,
-							_T("System sensor state"), 5, pcExtendedSensorStatus,
-							_T("Inlet sensor state"), 6, pcSensorStatus,
-							_T("DHW sensor state"), 7, pcSensorStatus,
-							_T("Stack sensor state"), 8, pcSensorStatus,
-							_T("Outdoor sensor state"), 1, pcExtendedSensorStatus,
-							_T("Header sensor state"), 10, pcSensorStatus,
-							_T("Alarm code"), 0, pcAlarmCode,
-							_T("Setpoint"), 23, pcTrendStatus};
+	static SOLAPAGE SummaryPage[] = {	_T(""), 2, pcBurnerControlStatus, /* 0 */
+							_T(""), 8, pcBurnerControlStatus, /* 1 */
+							_T("Demand"), 0, pcTrendStatus, /* 2 */
+							_T("Burner state"), 1, pcBurnerControlStatus, /* 3 */
+							_T("Brnr seq."), 6, pcBurnerControlStatus, /* 4 */
+							_T("Brnr dly."), 7, pcBurnerControlStatus, /* 5 */
+							_T("DHW pri. remain"), 3, pcDHWStatus, /* 6 */
+							_T("CH pump"), 3, pcPumpStatus, /* 7 */
+							_T("DHW pump"), 7, pcPumpStatus, /* 8 */
+							_T("System pump"), 12, pcPumpStatus, /* 9 */
+							_T("Boiler pump"), 15, pcPumpStatus, /* 10 */
+							_T("LL setpoint"), 12, pcTrendStatus, /* 11 */
+							_T("Inlet"), 5, pcTrendStatus, /* 12 */
+							_T("Outlet"), 1, pcTrendStatus, /* 13 */
+							_T("System"), 4, pcExtendedSensorStatus, /* 14 */
+							_T("Stack"), 8, pcTrendStatus, /* 15 */
+							_T("4-20mA"), 9, pcTrendStatus, /* 16 */
+							_T("Outdoor"), 0, pcExtendedSensorStatus, /* 17 */
+							_T("Firing rate"), 2, pcTrendStatus, /* 18 */
+							_T("Fan speed"), 3, pcTrendStatus, /* 19 */
+							_T("Flame signal"), 4, pcTrendStatus, /* 20 */
+							_T("DHW"), 6, pcTrendStatus, /* 21 */
+							_T("CH setpoint"), 10, pcTrendStatus, /* 22 */
+							_T("DHW setpoint"), 11, pcTrendStatus, /* 23 */
+							_T("Active rate limiter"), 0, pcDemandModulationStatus, /* 24 */
+							_T("Limited rate"), 1, pcDemandModulationStatus, /* 25 */
+							_T("Active rate ovrd"), 2, pcDemandModulationStatus, /* 26 */
+							_T("Override rate"), 3, pcDemandModulationStatus, /* 27 */
+							_T("Demand rate"), 4, pcDemandModulationStatus, /* 28 */
+							_T("CH on hyst."), 7, pcCHStatus, /* 29 */
+							_T("CH off hyst."), 8, pcCHStatus, /* 30 */
+							_T("DHW on hyst."), 9, pcDHWStatus, /* 31 */
+							_T("DHW off hyst."), 10, pcDHWStatus, /* 32 */
+							_T("LL on hyst."), 5, pcLLConfig, /* 33 */
+							_T("LL off hyst."), 6, pcLLConfig, /* 34 */
+							_T("Outlet sensor state"), 5, pcSensorStatus, /* 35 */
+							_T("System sensor state"), 5, pcExtendedSensorStatus, /* 36 */
+							_T("Inlet sensor state"), 6, pcSensorStatus, /* 37 */
+							_T("DHW sensor state"), 7, pcSensorStatus, /* 38 */
+							_T("Stack sensor state"), 8, pcSensorStatus, /* 39 */
+							_T("Outdoor sensor state"), 1, pcExtendedSensorStatus, /* 40 */
+							_T("Header sensor state"), 10, pcSensorStatus, /* 41 */
+							_T("Alarm code"), 0, pcAlarmCode, /* 42 */
+							_T("Setpoint"), 23, pcTrendStatus}; /* 43 */
 
 	pcSummaryPage = (CSolaPage*) new CSolaPage(SummaryPage,sizeof(SummaryPage)/sizeof(SOLAPAGE));
 
