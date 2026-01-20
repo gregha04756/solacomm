@@ -241,6 +241,8 @@ enum MBReqType {
 typedef DWORD (*sctf)(LPARAM lp);
 typedef struct __tagTCPConnectInfo {u_long* lpulIPAddress; char* chPort; int cbPort;} TCPCONNECTINFO, *LPTCPCONNECTINFO;
 
+extern "C++" const SOLAALERTDESC AlertDescriptions[];
+
 #pragma pack(1)
 typedef struct __tagMBAPHeader { unsigned short usTransactionIdentifier;
 								unsigned short usProtocolIdentifier;

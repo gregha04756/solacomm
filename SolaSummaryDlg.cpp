@@ -115,7 +115,6 @@ MBConnType mbctMBConn;
 extern "C++" enum TCP_Gateway_Type g_TCP_gw_selection;
 CSolaTCPComm* lpSolaTCPComm;
 
-
 // Forward declarations of functions included in this code module:
 void CALLBACK PropSheetCallback(HWND hwndPropSheet, UINT uMsg, LPARAM lParam);
 LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPARAM lParam);
@@ -1169,6 +1168,9 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				hRes = ::StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%lu,"), ulN);
 				hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), szTemp);
 			}
+			hRes = ::StringCchPrintf(szTemp, sizeof(szTemp) / sizeof(TCHAR), _T("%u %s,"), pcAlertLog->GetLPMap(0)->pAlertRecord->aa.usAlertCode,AlertDescriptions[pcAlertLog->GetLPMap(0)->pAlertRecord->aa.usAlertCode].szAlertText);
+			hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), szTemp);
+
 			bNewData = TRUE;
 			if ( usRegAcc != pcTrendStatus->GetValue((int)13) )
 			{
@@ -1492,6 +1494,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 									hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), pcStatistics->GetParmName(i));
 									hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), _T(","));
 								}
+								hRes = ::StringCchCat(szSaveBuf, sizeof(szSaveBuf) / sizeof(TCHAR), _T("Alert code,"));
 								::EnterCriticalSection(&gSaveFileCritSect);
 								if ( hSaveFile != NULL )
 								{
