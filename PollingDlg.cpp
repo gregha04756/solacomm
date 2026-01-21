@@ -1,6 +1,7 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Resource.h"
 #include "PollingDlg.h"
+#include <cassert>
 
 CPollingDlg::CPollingDlg(void)
 {
@@ -34,6 +35,7 @@ CPollingDlg::CPollingDlg(HWND hOwner,HINSTANCE hInst,TCHAR* szTitle):m_hwndOwner
 	if ( m_hPollingDlgThread == NULL )
 	{
 		m_hPollingDlgQuitEvent = ::CreateEvent(NULL,true,false,m_szPollingDlgQuitEvent);
+		assert(NULL != m_hPollingDlgQuitEvent);
 		bResult = ::ResetEvent(m_hPollingDlgQuitEvent);
 		m_hPollingDlgThread = ::CreateThread(NULL,0,PollingDlgThreadProc,(LPVOID)this,CREATE_SUSPENDED,&m_dwPollingDlgThreadID);
 		dwResult = ::GetLastError();
@@ -66,6 +68,7 @@ CPollingDlg::~CPollingDlg(void)
 
 INT_PTR CALLBACK CPollingDlg::PollingDlgProc(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 {
+	PVOID p_v;
 	static CPollingDlg* pnd;
 	BOOL bResult;
 	int i;
@@ -82,6 +85,10 @@ INT_PTR CALLBACK CPollingDlg::PollingDlgProc(HWND hDlg,UINT message,WPARAM wPara
 	int mm;
 	int ss;
 	double dErrRate;
+	double dSentRate;
+	double dRecvRate;
+	TCHAR strDataSent[32];
+	TCHAR strDataRecv[32];
 
 	switch (message)
 	{
@@ -103,7 +110,7 @@ INT_PTR CALLBACK CPollingDlg::PollingDlgProc(HWND hDlg,UINT message,WPARAM wPara
 		ndx = (i < sizeof(uiTimes)/sizeof(UINT)) ? i : sizeof(uiTimes)/sizeof(UINT);
 		lRes = ::SendMessage(::GetDlgItem(hDlg,IDC_POLLINTERVALCOMBO),CB_SETCURSEL,(WPARAM)ndx,(LPARAM)0);
 		bResult = ::EnableWindow(::GetDlgItem(hDlg,IDC_BTNPOLLINTERVALAPPLY),false);
-		uipRefreshTimer = ::SetTimer(hDlg,uipRTID,1400,NULL);
+		uipRefreshTimer = ::SetTimer(hDlg,uipRTID, pollInterval,NULL);
 		::EnterCriticalSection(&gCOMCritSect);
 		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALSENT,g_dwTotalSent,false);
 		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALRCVD,g_dwTotalRcvd,false);
@@ -124,9 +131,22 @@ INT_PTR CALLBACK CPollingDlg::PollingDlgProc(HWND hDlg,UINT message,WPARAM wPara
 		bResult = ::SetDlgItemText(hDlg,IDC_POLLERRORRATE,szTemp);
 		return (INT_PTR)TRUE;
 	case WM_TIMER:
+		p_v = SecureZeroMemory((PVOID)strDataSent, sizeof(strDataSent));
+		p_v = SecureZeroMemory((PVOID)strDataRecv, sizeof(strDataRecv));
 		::EnterCriticalSection(&gCOMCritSect);
-		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALSENT,g_dwTotalSent,false);
-		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALRCVD,g_dwTotalRcvd,false);
+		dSentRate = (double)g_dwTotalSent / (double)g_dwConnectTime;
+		dRecvRate = (double)g_dwTotalRcvd / (double)g_dwConnectTime;
+//		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALSENT,g_dwTotalSent,false);
+		hRes = ::StringCchPrintf(strDataSent, sizeof(strDataSent) / sizeof(TCHAR), _T("%ld %g/s"), g_dwTotalSent, dSentRate);
+		bResult = ::SetDlgItemText(hDlg, IDC_POLLTOTALSENT, strDataSent);
+
+
+//		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALRCVD,g_dwTotalRcvd,false);
+		hRes = ::StringCchPrintf(strDataRecv, sizeof(strDataRecv) / sizeof(TCHAR), _T("%ld %g/s"), g_dwTotalRcvd, dRecvRate);
+		bResult = ::SetDlgItemText(hDlg, IDC_POLLTOTALRCVD, strDataRecv);
+
+
+
 		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALERRORS,g_dwTotalCRCErrors,false);
 		::LeaveCriticalSection(&gCOMCritSect);
 		::EnterCriticalSection(&gTimeCritSect);
@@ -136,7 +156,7 @@ INT_PTR CALLBACK CPollingDlg::PollingDlgProc(HWND hDlg,UINT message,WPARAM wPara
 		dErrRate = g_dErrorRate;
 		::LeaveCriticalSection(&gTimeCritSect);
 		hRes = ::StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%02d:%02d:%02d"),hh,mm,ss);
-		::SetDlgItemText(hDlg,IDC_POLLCONNECTTIME,szTemp);
+		bResult = ::SetDlgItemText(hDlg,IDC_POLLCONNECTTIME,szTemp);
 		hRes = ::StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%6.1f/min"),dErrRate);
 		bResult = ::SetDlgItemText(hDlg,IDC_POLLERRORRATE,szTemp);
 		return (INT_PTR)TRUE;
