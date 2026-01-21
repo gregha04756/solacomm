@@ -13,6 +13,8 @@ extern "C++" DWORD g_dwConnectTime;
 extern "C++" double g_dErrorRate;
 extern "C++" HANDLE g_hReSyncReqEvent;
 
+constexpr auto pollInterval = (UINT)1400;
+
 class CPollingDlg
 {
 public:

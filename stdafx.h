@@ -35,9 +35,7 @@
 // Windows Header Files:
 #include <windows.h>
 #include <stdint.h>
-#if 0
-#include <typeinfo.h>
-#endif
+#include <sysinfoapi.h>
 #include <commctrl.h>
 #include <commdlg.h>
 #include <winsock2.h>
@@ -53,6 +51,7 @@
 #include <cstdlib>
 #include <locale>
 #include <codecvt>
+#include <cassert>
 
 #ifdef _DEBUG
    #ifndef DBG_NEW
