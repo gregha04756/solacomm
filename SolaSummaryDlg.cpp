@@ -9,6 +9,7 @@
 #include "SolaTCPComm.h"
 #include "SolaPage.h"
 #include "PollingDlg.h"
+#include <memory>
 
 
 using namespace std;
@@ -213,7 +214,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 	static struct addrinfo *ptr;
 	static struct addrinfo hints;
 	static struct sockaddr_in *sockaddr_ipv4;
-	static CPollingDlg* lpPollingDlg;
+	static std::unique_ptr<CPollingDlg> lpPollingDlg;
 	static char* pchMBServer;
 	static char chMBServer[32];
 	static in_addr addrMBServer;
@@ -278,7 +279,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		dwCommThreadID = 0;
 		usRegAcc = 0;
 		lpSolaTCPComm = NULL;
-		lpPollingDlg = NULL;
+		lpPollingDlg = nullptr;
 		p_stdlg = NULL;
 		p_v = ::SecureZeroMemory((PVOID)&g_SolaID,sizeof(g_SolaID));
 		nPageIndex = (int) ::SendMessage(::GetParent(hDlg), PSM_IDTOINDEX, 0, (LPARAM)IDD_SOLASUMMARYDLG);
@@ -785,7 +786,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 			lResult = ::SetDlgItemText(hDlg,IDC_TXTTXHB,szTemp);
 			hRes = ::StringCchPrintf(szTemp,sizeof(szTemp)/sizeof(TCHAR),_T("%c"),szRxHB[nHBCntr]);
 			lResult = ::SetDlgItemText(hDlg,IDC_TXTRXHB,szTemp);
-			if (NULL == lpPollingDlg)
+			if (nullptr == lpPollingDlg)
 			{
 				bResult = ::EnableWindow(::GetDlgItem(hDlg,IDC_BTNPOLLDLG),true);
 			}
@@ -841,6 +842,7 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		nResult = ::MessageBox(hDlg,_T("Communications error, polling aborted"),szTitle,MB_OK);
 		return true;
 	case WM_APPQUITPOLLINGDLG:
+#if 0
 		if ( lpPollingDlg )
 		{
 			if ( ::IsWindow(lpPollingDlg->GetHWNDPollingDlg()) )
@@ -849,12 +851,12 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 				lpPollingDlg = NULL;
 			}
 		}
-#if 0
 		if ( NULL != hCOM )
 		{
 			bResult = ::EnableWindow(::GetDlgItem(hDlg,IDC_BTNPOLLDLG),true);
 		}
 #endif
+		lpPollingDlg = nullptr;
 		return true;
 	case  WM_CHILDACTIVATE:
 		Make_Reg_Group_List(pcSummaryPage);
@@ -1421,17 +1423,17 @@ LRESULT CALLBACK SolaSummaryDlgProc(HWND hDlg, UINT uMessage, WPARAM wParam, LPA
 		}
 		if ( LOWORD(wParam) == IDC_BTNPOLLDLG )
 		{
-			if (NULL == lpPollingDlg )
+			if (nullptr == lpPollingDlg )
 			{
 				try
 				{
-					lpPollingDlg = (CPollingDlg*)new CPollingDlg(hDlg,g_hInst,szTitle);
+					lpPollingDlg = std::unique_ptr<CPollingDlg> (new CPollingDlg(hDlg,g_hInst,szTitle));
 				}
 				catch (std::bad_alloc &ba)
 				{
 					ReportError(::GetLastError());
 				}
-				if ( NULL != lpPollingDlg )
+				if ( nullptr != lpPollingDlg )
 				{
 					bResult = ::EnableWindow(::GetDlgItem(hDlg, IDC_BTNPOLLDLG), false);
 				}
