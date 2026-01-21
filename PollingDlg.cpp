@@ -136,17 +136,10 @@ INT_PTR CALLBACK CPollingDlg::PollingDlgProc(HWND hDlg,UINT message,WPARAM wPara
 		::EnterCriticalSection(&gCOMCritSect);
 		dSentRate = (double)g_dwTotalSent / (double)g_dwConnectTime;
 		dRecvRate = (double)g_dwTotalRcvd / (double)g_dwConnectTime;
-//		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALSENT,g_dwTotalSent,false);
 		hRes = ::StringCchPrintf(strDataSent, sizeof(strDataSent) / sizeof(TCHAR), _T("%ld %g/s"), g_dwTotalSent, dSentRate);
 		bResult = ::SetDlgItemText(hDlg, IDC_POLLTOTALSENT, strDataSent);
-
-
-//		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALRCVD,g_dwTotalRcvd,false);
 		hRes = ::StringCchPrintf(strDataRecv, sizeof(strDataRecv) / sizeof(TCHAR), _T("%ld %g/s"), g_dwTotalRcvd, dRecvRate);
 		bResult = ::SetDlgItemText(hDlg, IDC_POLLTOTALRCVD, strDataRecv);
-
-
-
 		bResult = ::SetDlgItemInt(hDlg,IDC_POLLTOTALERRORS,g_dwTotalCRCErrors,false);
 		::LeaveCriticalSection(&gCOMCritSect);
 		::EnterCriticalSection(&gTimeCritSect);
