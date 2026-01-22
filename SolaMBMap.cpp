@@ -537,7 +537,7 @@ unsigned char* CSolaMBMap::GetStr(unsigned short usAddr)
 	return (unsigned char*)NULL;
 }
 
-unsigned char* CSolaMBMap::SetStr(int index,unsigned char* pchStr,short cbLen)
+std::unique_ptr<unsigned char> CSolaMBMap::SetStr(int index,std::unique_ptr<char> pchStr,short cbLen)
 {
 	unsigned char* p1;
 	if ( (NULL != m_lpSolaMBMap) && (index < GetRegGroupSize()) )
@@ -549,14 +549,15 @@ unsigned char* CSolaMBMap::SetStr(int index,unsigned char* pchStr,short cbLen)
 			{
 				if ( i < cbLen )
 				{
-					*(p1++) = pchStr[i];
+//					*(p1++) = pchStr[i];
+					*(p1++) = pchStr.get()[i];
 				}
 				else
 				{
 					*(p1++) = '\0';
 				}
 			}
-			return (unsigned char*)m_lpSolaMBMap[index].pchStr;
+			return m_lpSolaMBMap[index].pchStr;
 		}
 	}
 	if ( (NULL != m_lpSolaU32Map) && (index < GetRegGroupSize()) )
@@ -568,7 +569,7 @@ unsigned char* CSolaMBMap::SetStr(int index,unsigned char* pchStr,short cbLen)
 			{
 				if ( i < cbLen )
 				{
-					*(p1++) = pchStr[i];
+					*(p1++) = pchStr.get()[i];
 				}
 				else
 				{

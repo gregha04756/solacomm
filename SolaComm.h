@@ -2,6 +2,7 @@
 
 using namespace std;
 
+#include <memory>
 #include "resource.h"
 
 DWORD const SOLAREADSDTO = 5000L; /* Sola RTU direct connect disconnected if no data read for # of milliseconds */
@@ -260,7 +261,7 @@ typedef struct __tagMBMessage { LPVOID lpMap; MBReqType rt; DWORD dwTimeInTicks;
 #pragma pack(1)
 typedef struct __tagMBResponse { unsigned char uchFunctionCode;
 								unsigned short uscbRespLen;
-								char* chResponse; } MBRESPONSE, *LPMBRESPONSE;
+								std::unique_ptr<char> chResponse; } MBRESPONSE, *LPMBRESPONSE;
 
 #pragma pack(1)
 typedef struct __tagMBRespMessage { MBAPHEADER mbaphdr;MBRESPONSE mbr; } MBRESPMESSAGE, *LPMBRESPMESSAGE;

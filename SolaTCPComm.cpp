@@ -515,7 +515,7 @@ LRESULT CALLBACK CSolaTCPComm::TCPSocketWndProc(HWND hWnd, UINT message, WPARAM 
 				lpMBRespMsg->mbr.chResponse = NULL;
 				if ( lpMBRespMsg->mbaphdr.usLength - 2 )
 				{
-					lpMBRespMsg->mbr.chResponse = (char*) new char[lpMBRespMsg->mbaphdr.usLength-2];
+					lpMBRespMsg->mbr.chResponse = std::unique_ptr<char> (new char[lpMBRespMsg->mbaphdr.usLength-2]);
 					for ( i = 0; i < (lpMBRespMsg->mbaphdr.usLength-2); i++ )
 					{
 						lpMBRespMsg->mbr.chResponse[i] = recvBuf[sizeof(MBAPHEADER)+2+i];

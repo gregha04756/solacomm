@@ -114,7 +114,7 @@ typedef struct __tagNumericUIParms {signed short ssValue; SolaType st;const TCHA
 	int GetMultiItemValue(int mapindex,int listindex);
 	unsigned char* GetStr(int index);
 	unsigned char* GetStr(unsigned short addr);
-	unsigned char* SetStr(int index,unsigned char* pchStr,short cbLen);
+	std::unique_ptr<unsigned char> SetStr(int index, std::unique_ptr<char> pchStr, short cbLen);
 	unsigned char* SetStr(unsigned short addr,unsigned char* pchStr,short cbLen);
 	short GetcbStrLen(int index);
 	short GetcbStrLen(unsigned short addr);
