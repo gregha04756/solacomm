@@ -717,6 +717,7 @@ void Update_Alert_List(HWND hwnd_d)
 	TCHAR szAlertRecord[MAX_LOADSTRING];
 	unsigned short usBit;
 	unsigned long ulCycle;
+	unsigned char occCount;
 
 	lRes = ::SendMessage(::GetDlgItem(hwnd_d,IDC_ALERTLIST), LB_RESETCONTENT, (WPARAM) 0, (LPARAM) 0);
 			for ( i = 0; !g_bQuit && i < pcAlertLog->GetSize(); i++ )
@@ -727,9 +728,11 @@ void Update_Alert_List(HWND hwnd_d)
 					ulCycle = pcAlertLog->GetLPMap(i)->pAlertRecord->aa.ulCycle;
 					if ( pcAlertLog->GetLPMap(i)->pAlertRecord->aa.usAlertCode < sizeof(AlertDescriptions)/sizeof(SOLAALERTDESC) )
 					{
-						hRes = ::StringCchPrintf(szAlertRecord, sizeof(szAlertRecord)/sizeof(TCHAR), _T("%03d               %ld             %s"),
+						occCount = pcAlertLog->GetLPMap(i)->pAlertRecord->aa.uchCount;
+						hRes = ::StringCchPrintf(szAlertRecord, sizeof(szAlertRecord)/sizeof(TCHAR), _T("%03d               %ld      %d       %s"),
 							pcAlertLog->GetLPMap(i)->pAlertRecord->aa.usAlertCode,
 							pcAlertLog->GetLPMap(i)->pAlertRecord->aa.ulCycle,
+							pcAlertLog->GetLPMap(i)->pAlertRecord->aa.uchCount,
 							AlertDescriptions[pcAlertLog->GetLPMap(i)->pAlertRecord->aa.usAlertCode].szAlertText);
 						lRes = ::SendMessage(::GetDlgItem(hwnd_d,IDC_ALERTLIST), LB_ADDSTRING, (WPARAM) 0, (LPARAM) szAlertRecord);
 					}
